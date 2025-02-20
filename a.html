@@ -1,0 +1,242 @@
+<!-- ai-chat.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-black min-h-screen font-prompt text-white">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 h-screen w-72 bg-black/50 backdrop-blur-xl border-r border-white/5 z-50
+                  transform transition-transform duration-300 -translate-x-full md:translate-x-0"
+           id="sidebar">
+        <!-- Profile Section -->
+        <div class="p-4 border-b border-white/5">
+            <div class="flex items-center gap-3">
+                <img src="https://ui-avatars.com/api/?name=MSU+Student&background=random" 
+                     alt="Profile" 
+                     class="w-10 h-10 rounded-full ring-2 ring-yellow-400">
+                <div>
+                    <h3 class="font-medium">นายเอ บีซี</h3>
+                    <p class="text-sm text-gray-400">รหัส: 64010999</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Items -->
+        <nav class="p-4 space-y-2">
+            <a href="#" class="menu-item active">
+                <i class="fas fa-comment-dots"></i>
+                <span>แชทกับ AI</span>
+            </a>
+            <button onclick="showSchedule('class')" class="menu-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>ตารางเรียน</span>
+            </button>
+            <button onclick="showSchedule('exam')" class="menu-item">
+                <i class="fas fa-file-alt"></i>
+                <span>ตารางสอบ</span>
+            </button>
+            <button onclick="showNotifications()" class="menu-item">
+                <i class="fas fa-bell"></i>
+                <span>การแจ้งเตือน</span>
+                <span class="notification-badge">3</span>
+            </button>
+        </nav>
+
+        <!-- Quick Settings -->
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-white/5">
+            <div class="flex flex-col gap-3">
+                <label class="flex items-center justify-between text-sm">
+                    <span>แจ้งเตือนก่อนเรียน</span>
+                    <input type="checkbox" class="ios-toggle" checked>
+                </label>
+                <label class="flex items-center justify-between text-sm">
+                    <span>แจ้งเตือนก่อนสอบ</span>
+                    <input type="checkbox" class="ios-toggle" checked>
+                </label>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="md:ml-72">
+        <!-- Top Navigation -->
+        <nav class="fixed top-0 right-0 left-0 md:left-72 bg-black/30 backdrop-blur-xl border-b border-white/5 z-40">
+            <div class="container px-4 py-4 flex justify-between items-center">
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- AI Status -->
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <span class="text-sm">AI พร้อมให้บริการ</span>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-3">
+                    <button class="action-button" onclick="clearChat()">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                    <button class="action-button" onclick="toggleDarkMode()">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Chat Container -->
+        <main class="pt-16 h-[calc(100vh-4rem)]">
+            <!-- Chat Messages -->
+            <div id="chat-container" class="h-[calc(100vh-8rem)] overflow-y-auto px-4 py-6">
+                <!-- Welcome Message -->
+                <div class="chat-message bot-message animate-fade-in">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-yellow-400"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="text-sm font-medium text-yellow-400 mb-1">MSU AI Assistant</p>
+                            <div class="bg-white/5 rounded-2xl rounded-tl-none p-4">
+                                <p>สวัสดีค่ะ ฉันคือผู้ช่วย AI ของ MSU Intelligence 😊</p>
+                                <p class="mt-2">วันนี้คุณมีตารางเรียน:</p>
+                                <ul class="mt-2 space-y-2">
+                                    <li class="flex items-center gap-2">
+                                        <i class="fas fa-clock text-yellow-400"></i>
+                                        <span>09:00 - 12:00 การเขียนโปรแกรมเว็บ (IT-201)</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fas fa-clock text-yellow-400"></i>
+                                        <span>13:00 - 16:00 ระบบฐานข้อมูล (IT-305)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="my-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button class="quick-action-btn">
+                        <i class="fas fa-calendar-check text-xl mb-2"></i>
+                        <span>ดูตารางเรียนทั้งหมด</span>
+                    </button>
+                    <button class="quick-action-btn">
+                        <i class="fas fa-book text-xl mb-2"></i>
+                        <span>ตรวจสอบผลการเรียน</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="fixed bottom-0 left-0 right-0 md:left-72 border-t border-white/5 bg-black/30 backdrop-blur-xl p-4">
+                <div class="container max-w-4xl mx-auto">
+                    <div class="flex items-end gap-4">
+                        <div class="flex-1 bg-white/5 rounded-2xl border border-white/10 transition-all">
+                            <textarea id="message-input" 
+                                    rows="1"
+                                    class="w-full bg-transparent px-4 py-3 resize-none focus:outline-none text-white"
+                                    placeholder="พิมพ์ข้อความของคุณ..."
+                                    onkeydown="handleKeyPress(event)"></textarea>
+                        </div>
+                        <button id="send-button" 
+                                class="bg-yellow-400 text-black rounded-xl p-3 hover:bg-yellow-300 transition-colors"
+                                onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="schedule-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="ios-card max-w-4xl w-full max-h-[80vh] overflow-y-auto animate-slide-up">
+                <!-- Modal content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Menu Item */
+        .menu-item {
+            @apply w-full px-4 py-2 rounded-xl flex items-center gap-3 text-gray-400 hover:text-white 
+                   hover:bg-white/5 transition-colors;
+        }
+
+        .menu-item.active {
+            @apply bg-yellow-400/20 text-yellow-400;
+        }
+
+        /* Quick Action Button */
+        .quick-action-btn {
+            @apply flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 
+                   hover:bg-white/10 transition-all text-gray-300 hover:text-yellow-400
+                   border border-white/10;
+        }
+
+        /* Action Button */
+        .action-button {
+            @apply w-8 h-8 flex items-center justify-center rounded-full
+                   bg-white/5 hover:bg-white/10 transition-colors;
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            @apply ml-auto bg-yellow-400 text-black text-xs px-2 py-0.5 rounded-full;
+        }
+
+       
+    </style>
+
+    <script>
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        // Show Schedule
+        function showSchedule(type) {
+            const modal = document.getElementById('schedule-modal');
+            const content = modal.querySelector('.ios-card');
+            
+            // Load schedule content based on type
+            content.innerHTML = `
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold">${type === 'class' ? 'ตารางเรียน' : 'ตารางสอบ'}</h3>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <!-- Add schedule content here -->
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('schedule-modal').classList.add('hidden');
+        }
+
+        // Additional functions...
+    </script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!-- ai-chat.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-black min-h-screen font-prompt text-white overflow-hidden">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Side Panel for Schedule -->
+    <div id="schedule-panel" 
+         class="fixed right-0 top-0 w-80 h-screen bg-black/50 backdrop-blur-xl border-l border-white/5 
+                transform transition-transform duration-300 translate-x-full z-40">
+        <div class="p-4 h-full flex flex-col">
+            <!-- Panel Header -->
+            <div class="flex justify-between items-center mb-12">
+                <h3 class="text-lg font-medium">ตารางของฉัน</h3>
+                <button onclick="toggleSchedulePanel()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Schedule Tabs -->
+            <div class="flex gap-2 mb-4">
+                <button onclick="switchTab('today')" class="schedule-tab active">วันนี้</button>
+                <button onclick="switchTab('schedule')" class="schedule-tab">ตารางเรียน</button>
+                <button onclick="switchTab('exam')" class="schedule-tab">ตารางสอบ</button>
+            </div>
+
+            <!-- Schedule Content -->
+            <div class="flex-1 overflow-y-auto">
+                <!-- Today's Schedule -->
+                <div id="today-content" class="schedule-content active">
+                    <div class="timeline-item">
+                        <div class="time">09:00</div>
+                        <div class="event">
+                            <h4>การเขียนโปรแกรมเว็บ</h4>
+                            <p class="text-sm text-gray-400">ห้อง IT-201</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">13:00</div>
+                        <div class="event">
+                            <h4>ระบบฐานข้อมูล</h4>
+                            <p class="text-sm text-gray-400">ห้อง IT-305</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Schedule -->
+                <div id="schedule-content" class="schedule-content hidden">
+                    <div class="day-schedule">
+                        <h4 class="text-yellow-400 mb-2">วันจันทร์</h4>
+                        <div class="schedule-item">
+                            <div class="time">09:00 - 12:00</div>
+                            <div class="course">การเขียนโปรแกรมเว็บ</div>
+                            <div class="room">IT-401</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="time">13:00 - 16:00</div>
+                            <div class="course">ระบบฐานข้อมูล</div>
+                            <div class="room">IT-405</div>
+                        </div>
+                    </div>
+                  
+                </div>
+
+                <!-- Exam Schedule -->
+                <div id="exam-content" class="schedule-content hidden">
+                    <div class="exam-item">
+                        <div class="date">15 มี.ค. 2567</div>
+                        <div class="details">
+                            <h4>การเขียนโปรแกรมเว็บ</h4>
+                            <p>09:00 - 12:00</p>
+                            <p class="text-sm text-gray-400">ห้อง IT-201</p>
+                        </div>
+                        <div class="notification">
+                            <label class="ios-toggle-container">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-black/30 border-b border-white/5 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="main.html" class="hover:bg-white/5 p-2 rounded-full transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <span class="text-lg font-medium">AI Assistant</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSchedulePanel()" 
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 
+                               hover:bg-white/10 transition-colors text-sm">
+                    <i class="fas fa-calendar"></i>
+                    <span class="hidden sm:inline">ตารางของฉัน</span>
+                </button>
+                <span class="text-sm text-green-400">
+                    <i class="fas fa-circle text-xs"></i>
+                    <span class="ml-1">พร้อมใช้งาน</span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chat Interface -->
+    <main class="h-screen pt-16 flex flex-col">
+        <!-- Chat Container -->
+        <div id="chat-container" class="flex-1 overflow-y-auto px-4 py-6">
+            <!-- Welcome Message -->
+            <div class="chat-message bot-message animate-fade-in">
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-yellow-400"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-sm font-medium text-yellow-400 mb-1">MSU AI Assistant</p>
+                        <div class="bg-white/5 rounded-2xl rounded-tl-none p-4">
+                            <p>สวัสดีค่ะ ฉันคือผู้ช่วย AI ของ MSU Intelligence 😊</p>
+                            <p class="mt-2">วันนี้คุณมีตารางเรียน:</p>
+                            <ul class="mt-2 space-y-2">
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-clock text-yellow-400"></i>
+                                    <span>09:00 - 12:00 การเขียนโปรแกรมเว็บ (IT-201)</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-clock text-yellow-400"></i>
+                                    <span>13:00 - 16:00 ระบบฐานข้อมูล (IT-305)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggested Questions -->
+            <div class="mt-6 grid grid-cols-1  gap-3 animate-fade-in" style="--delay: 0.2s">
+                <button class="suggested-question" onclick="askQuestion(this.textContent)">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>หลักการโปรแกรมคอมพิวเตอร์ วันนี้เรียนถึงไหน</span>
+                </button>
+                <button class="suggested-question" onclick="askQuestion(this.textContent)">
+                    <i class="fas fa-calendar"></i>
+                    <span>แจ้งเตือนตารางสอบ</span>
+                </button>
+                <button class="suggested-question" onclick="askQuestion(this.textContent)">
+                    <i class="fas fa-book"></i>
+                    <span>การยื่นคำร้องออนไลน์</span>
+                </button>
+                <button class="suggested-question" onclick="askQuestion(this.textContent)">
+                    <i class="fas fa-medal"></i>
+                    <span>แจ้งเตือนเวลาส่งงาน</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="border-t border-white/5 bg-black/30 backdrop-blur-xl p-4">
+            <div class="container mx-auto max-w-4xl">
+                <div class="flex items-end gap-4">
+                    <div class="flex-1 bg-white/5 rounded-2xl border border-white/10 transition-all">
+                        <textarea id="message-input" 
+                                rows="1"
+                                class="w-full bg-transparent px-4 py-3 resize-none focus:outline-none"
+                                placeholder="พิมพ์ข้อความของคุณ..."
+                                ></textarea>
+                    </div>
+                    <button id="send-button" 
+                            class="bg-yellow-400 text-black rounded-xl p-3 hover:bg-yellow-300 transition-colors"
+                            onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        /* Schedule Panel Styles */
+        .schedule-tab {
+            @apply px-3 py-1.5 rounded-full text-sm text-gray-400 hover:text-white 
+                   hover:bg-white/5 transition-colors;
+        }
+
+        .schedule-tab.active {
+            @apply bg-yellow-400/20 text-yellow-400;
+        }
+
+        .schedule-content {
+            @apply hidden;
+        }
+
+        .schedule-content.active {
+            @apply block;
+        }
+
+        .timeline-item {
+            @apply flex items-start gap-4 mb-4 p-3 rounded-xl bg-white/5 border border-white/10;
+        }
+
+        .time {
+            @apply text-yellow-400 font-medium;
+        }
+
+        .schedule-item {
+            @apply p-3 mb-3 rounded-xl bg-white/5 border border-white/10 space-y-1;
+        }
+
+        .exam-item {
+            @apply p-3 mb-3 rounded-xl bg-white/5 border border-white/10 
+                   flex justify-between items-center;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #fbbf24;
+            border-radius: 50%;
+            animation: typingAnimation 1s infinite;
+            opacity: 0.5;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingAnimation {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Suggested question button */
+        .suggested-question {
+            @apply flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 
+                   border border-white/10 transition-all text-left text-sm;
+        }
+
+        .suggested-question i {
+            @apply text-yellow-400;
+        }
+    </style>
+
+    <script>
+        // Toggle Schedule Panel
+        function toggleSchedulePanel() {
+            const panel = document.getElementById('schedule-panel');
+            panel.classList.toggle('translate-x-full');
+        }
+
+        // Switch Schedule Tabs
+        function switchTab(tab) {
+            // Hide all content
+            document.querySelectorAll('.schedule-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(tab + '-content').classList.add('active');
+            
+            // Update tab styles
+            document.querySelectorAll('.schedule-tab').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+  // Send message
+  function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                input.style.height = 'auto';
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    simulateTyping();
+                }, 500);
+            }
+        }
+
+        // Add message to chat
+        function addMessage(text, type) {
+            const container = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${type}-message animate-fade-in my-4`;
+            
+            if (type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start gap-3 flex-row-reverse">
+                        <div class="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-user text-black"></i>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <p class="text-sm font-medium text-yellow-400 mb-1">คุณ</p>
+                            <div class="bg-yellow-400 text-black rounded-2xl rounded-tr-none p-4">
+                                <p>${text}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-yellow-400"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="text-sm font-medium text-yellow-400 mb-1">MSU AI Assistant</p>
+                            <div class="bg-white/5 rounded-2xl rounded-tl-none p-4">
+                                <p>${text}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Simulate typing indicator
+        function simulateTyping() {
+            const container = document.getElementById('chat-container');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message bot-message animate-fade-in my-4 typing-indicator';
+            typingDiv.innerHTML = `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-yellow-400"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-sm font-medium text-yellow-400 mb-1">MSU AI Assistant</p>
+                        <div class="bg-white/5 rounded-2xl rounded-tl-none p-4">
+                            <div class="flex gap-2">
+                                <span class="typing-dot"></span>
+                                <span class="typing-dot"></span>
+                                <span class="typing-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+
+            // Remove typing indicator and show response after delay
+            setTimeout(() => {
+                typingDiv.remove();
+                addMessage('ขอบคุณสำหรับคำถามค่ะ ฉันจะช่วยตอบคำถามนี้ให้ดีที่สุด', 'bot');
+            }, 2000);
+        }
+
+        // Handle suggested questions
+        function askQuestion(question) {
+            const input = document.getElementById('message-input');
+            input.value = question;
+            sendMessage();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-black min-h-screen font-prompt text-white overflow-x-hidden">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <!-- Gradient Orbs -->
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <!-- Animated Grid -->
+        <div class="grid-bg"></div>
+        <!-- Noise Overlay -->
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-black/30 border-b border-white/5 z-50">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2 animate-fade-in">
+                <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png" alt="Logo" class="h-8 w-8">
+                <span class="text-lg font-medium hidden sm:inline">MSU Intelligence</span>
+            </div>
+           
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen pt-24 pb-20 flex items-center relative">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 relative">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight ios-text-gradient animate-slide-up">
+                    MSU Intelligence
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-300 animate-slide-up" style="--delay: 0.2s">
+                    ระบบอัจฉริยะเพื่อการศึกษา มหาวิทยาลัยมหาสารคาม
+                </p>
+            </div>
+
+            <!-- Feature Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- AI Assistant -->
+                <div class="ios-card group animate-slide-up" style="--delay: 0.3s">
+                    <div class="ios-icon-container">
+                        <i class="fas fa-robot text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">AI Assistant</h3>
+                    <p class="text-gray-400 text-sm">ผู้ช่วยอัจฉริยะพร้อมตอบทุกคำถาม</p>
+                </div>
+
+                <!-- Study Consultation -->
+                <div class="ios-card group animate-slide-up" style="--delay: 0.4s">
+                    <div class="ios-icon-container">
+                        <i class="fas fa-graduation-cap text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">ปรึกษาการเรียน</h3>
+                    <p class="text-gray-400 text-sm">คำแนะนำจากผู้เชี่ยวชาญ</p>
+                </div>
+
+                <!-- Meet Friends -->
+                <div class="ios-card group animate-slide-up" style="--delay: 0.5s">
+                    <div class="ios-icon-container">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">นัดเพื่อน</h3>
+                    <p class="text-gray-400 text-sm">ค้นหาเพื่อนเรียนและทำกิจกรรม</p>
+                </div>
+
+                <!-- Smart Parking -->
+                <div class="ios-card group animate-slide-up" style="--delay: 0.6s">
+                    <div class="ios-icon-container">
+                        <i class="fas fa-car text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">Smart Parking</h3>
+                    <p class="text-gray-400 text-sm">จองที่จอดรถล่วงหน้า</p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="text-center mt-16 animate-fade-in" style="--delay: 0.8s">
+                <a href="login.html" class="ios-button-secondary mx- hover-float">
+                    เริ่มต้นใช้งาน
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+</body>
+</html>

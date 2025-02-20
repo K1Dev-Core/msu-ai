@@ -1,0 +1,71 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-black min-h-screen font-prompt text-white overflow-x-hidden">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="min-h-screen flex items-center justify-center px-4">
+        <div class="ios-card-large max-w-md w-full animate-fade-in p-8">
+            <!-- Logo -->
+            <div class="text-center mb-8">
+                <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png" 
+                     alt="MSU Logo" 
+                     class="h-24 w-24 mx-auto mb-6 animate-float">
+                <h2 class="text-2xl font-bold ios-text-gradient mb-2">MSU-Intelligence</h2>
+                <p class="text-gray-400">เข้าสู่ระบบด้วยบัญชี REG MSU</p>
+            </div>
+
+            <!-- Single Sign-On Button -->
+            <button onclick="loginWithREG()" 
+                    class="w-full bg-gradient-to-r from-yellow-500 to-yellow-400 text-black rounded-xl py-4 px-6
+                           flex items-center justify-center gap-3 hover:from-yellow-400 hover:to-yellow-300 
+                           transition-all duration-300 transform hover:-translate-y-1 font-medium group">
+                <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png" alt="REG" class="w-6 h-6">
+                <span>เข้าสู่ระบบด้วย REG MSU</span>
+                <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+            </button>
+
+            <!-- Back Link -->
+            <div class="text-center mt-6">
+                <a href="index.html" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>กลับหน้าหลัก
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loginWithREG() {
+            const button = document.querySelector('button');
+            const originalContent = button.innerHTML;
+            
+            // Show loading state
+            button.innerHTML = `
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>กำลังเข้าสู่ระบบ...</span>
+            `;
+            button.disabled = true;
+
+            // Simulate login process
+            setTimeout(() => {
+                window.location.href = 'main.html';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

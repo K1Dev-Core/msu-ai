@@ -1,0 +1,262 @@
+<!-- study-consult.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ปรึกษา | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-black min-h-screen font-prompt text-white">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-black/30 border-b border-white/5 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="main.html" class="hover:bg-white/5 p-2 rounded-full transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <span class="text-lg font-medium">ปรึกษา MSU</span>
+            </div>
+            <!-- Notification Badge -->
+            <div class="relative">
+                <button class="hover:bg-white/5 p-2 rounded-full transition-colors">
+                    <i class="fas fa-bell"></i>
+                    <span class="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 text-black 
+                               rounded-full text-xs flex items-center justify-center">3</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Category Tabs -->
+    <div class="fixed top-16 left-0 right-0 bg-black/30 backdrop-blur-xl z-40">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex gap-2 overflow-x-auto no-scrollbar">
+                <button onclick="switchTab('all')" class="tab-button active">
+                    ทั้งหมด
+                </button>
+                <button onclick="switchTab('teacher')" class="tab-button">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    อาจารย์
+                </button>
+                <button onclick="switchTab('doctor')" class="tab-button">
+                    <i class="fas fa-user-md"></i>
+                    แพทย์
+                </button>
+                <button onclick="switchTab('appointment')" class="tab-button">
+                    <i class="fas fa-calendar-check"></i>
+                    นัดหมาย
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-6 px-4">
+        <div class="container mx-auto max-w-4xl">
+            <!-- Search Bar -->
+            <div class="ios-card p-2 mb-6">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-search text-gray-400"></i>
+                    <input type="text" 
+                           placeholder="ค้นหาอาจารย์หรือแพทย์..." 
+                           class="bg-transparent w-full focus:outline-none">
+                </div>
+            </div>
+
+            <!-- Teachers Section -->
+            <div id="teachers-section" class="space-y-4">
+                <h2 class="text-xl font-medium mb-4">อาจารย์แนะนำ</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Teacher Card -->
+                    <div class="ios-card p-4 hover:border-yellow-400/30 transition-all cursor-pointer"
+                         onclick="openChat('teacher1')">
+                        <div class="flex gap-4">
+                            <img src="https://ui-avatars.com/api/?name=อาจารย์+สมชาย&background=random" 
+                                 class="w-16 h-16 rounded-xl object-cover" alt="Teacher">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-medium">อ.ดร.สมชาย วิชาการ</h3>
+                                        <p class="text-sm text-yellow-400">คณะวิทยาการสารสนเทศ</p>
+                                    </div>
+                                    <span class="text-xs text-green-400">ว่าง</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mt-2">เชี่ยวชาญ: การเขียนโปรแกรม, AI</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More Teacher Cards... -->
+                </div>
+            </div>
+
+            <!-- Doctors Section -->
+            <div id="doctors-section" class="space-y-4 mt-8">
+                <h2 class="text-xl font-medium mb-4">แพทย์ที่ปรึกษา</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Doctor Card -->
+                    <div class="ios-card p-4 hover:border-yellow-400/30 transition-all cursor-pointer"
+                         onclick="openChat('doctor1')">
+                        <div class="flex gap-4">
+                            <img src="https://ui-avatars.com/api/?name=นพ+มานะ&background=random" 
+                                 class="w-16 h-16 rounded-xl object-cover" alt="Doctor">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-medium">นพ.มานะ สุขภาพดี</h3>
+                                        <p class="text-sm text-yellow-400">ศูนย์แพทย์ มมส</p>
+                                    </div>
+                                    <span class="text-xs text-yellow-400">กำลังให้คำปรึกษา</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mt-2">แพทย์เวชศาสตร์ครอบครัว</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More Doctor Cards... -->
+                </div>
+            </div>
+
+            <!-- Upcoming Appointments -->
+            <div class="mt-8">
+                <h2 class="text-xl font-medium mb-4">การนัดหมายที่กำลังจะถึง</h2>
+                <div class="ios-card p-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-yellow-400/20 flex items-center justify-center">
+                            <i class="fas fa-calendar-check text-yellow-400 text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium">อ.ดร.สมชาย วิชาการ</h3>
+                            <p class="text-sm text-gray-400">วันพรุ่งนี้, 10:00 น.</p>
+                        </div>
+                        <button class="ios-button-secondary text-sm">
+                            เข้าร่วม
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Chat Modal -->
+    <div id="chat-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+        <div class="h-full flex flex-col">
+            <!-- Chat Header -->
+            <div class="bg-black/30 backdrop-blur-xl border-b border-white/5 p-4">
+                <div class="container mx-auto max-w-4xl">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <button onclick="closeChat()" class="hover:bg-white/5 p-2 rounded-full transition-colors">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <img src="https://ui-avatars.com/api/?name=อาจารย์+สมชาย&background=random" 
+                                 class="w-10 h-10 rounded-full" alt="Profile">
+                            <div>
+                                <h3 class="font-medium">อ.ดร.สมชาย วิชาการ</h3>
+                                <p class="text-sm text-green-400">ออนไลน์</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="icon-button">
+                                <i class="fas fa-video"></i>
+                            </button>
+                            <button class="icon-button">
+                                <i class="fas fa-phone"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="flex-1 overflow-y-auto p-4">
+                <div class="container mx-auto max-w-4xl">
+                    <!-- Messages will be added here -->
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="bg-black/30 backdrop-blur-xl border-t border-white/5 p-4">
+                <div class="container mx-auto max-w-4xl">
+                    <div class="flex items-end gap-4">
+                        <div class="flex-1 bg-white/5 rounded-2xl border border-white/10">
+                            <textarea placeholder="พิมพ์ข้อความ..." 
+                                      class="w-full bg-transparent px-4 py-3 resize-none focus:outline-none"></textarea>
+                        </div>
+                        <button class="ios-button-primary p-3">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Tab Button */
+        .tab-button {
+            @apply px-4 py-2 rounded-xl text-gray-400 whitespace-nowrap
+                   hover:bg-white/5 transition-colors flex items-center gap-2;
+        }
+
+        .tab-button.active {
+            @apply bg-yellow-400/20 text-yellow-400;
+        }
+
+        /* Icon Button */
+        .icon-button {
+            @apply w-10 h-10 rounded-full flex items-center justify-center
+                   bg-white/5 hover:bg-white/10 transition-colors;
+        }
+
+        /* Hide scrollbar but allow scrolling */
+        .no-scrollbar {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
+    <script>
+        function switchTab(tab) {
+            // Update tab styles
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Update content (you can add more logic here)
+        }
+
+        function openChat(id) {
+            document.getElementById('chat-modal').classList.remove('hidden');
+            // You can add more logic here to load chat history
+        }
+
+        function closeChat() {
+            document.getElementById('chat-modal').classList.add('hidden');
+        }
+
+        // Auto-resize textarea
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        });
+    </script>
+</body>
+</html>

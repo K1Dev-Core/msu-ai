@@ -1,0 +1,147 @@
+<!-- main.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าหลัก | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-black min-h-screen font-prompt text-white overflow-x-hidden">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-black/30 border-b border-white/5 z-50">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png" alt="MSU Logo" class="h-8 w-8">
+                <span class="text-lg font-medium hidden sm:inline">MSU Intelligence</span>
+            </div>
+            
+            <!-- User Profile -->
+            <div class="flex items-center gap-4">
+                <span class="text-sm text-gray-300 hidden sm:inline">นักศึกษา</span>
+                <div class="relative group">
+                    <button class="flex items-center gap-2 hover:bg-white/5 p-2 rounded-full transition-colors">
+                        <img src="https://ui-avatars.com/api/?name=MSU+Student&background=random" 
+                             alt="Profile" 
+                             class="w-8 h-8 rounded-full ring-2 ring-yellow-400">
+                        <i class="fas fa-chevron-down text-xs text-gray-400"></i>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-2 w-48 py-2 bg-black/80 backdrop-blur-xl rounded-xl shadow-xl border border-white/5 
+                                hidden group-hover:block animate-fade-in">
+                        <a href="#" class="px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-2">
+                            <i class="fas fa-user w-4"></i>
+                            <span>โปรไฟล์</span>
+                        </a>
+                        <a href="#" class="px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-2">
+                            <i class="fas fa-cog w-4"></i>
+                            <span>ตั้งค่า</span>
+                        </a>
+                        <hr class="my-2 border-white/5">
+                        <a href="login.html" class="px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 flex items-center gap-2">
+                            <i class="fas fa-sign-out-alt w-4"></i>
+                            <span>ออกจากระบบ</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <!-- Welcome Message -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl font-bold ios-text-gradient mb-2">ยินดีต้อนรับสู่ MSU Intelligence</h1>
+                <p class="text-gray-400">เลือกบริการที่ต้องการใช้งาน</p>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- AI Assistant -->
+                <a href="ai-chat.html" class="ios-card group animate-slide-up" style="--delay: 0.1s">
+                    <div class="ios-icon-container">
+                        <i class="fas fa-robot text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">AI Assistant</h3>
+                    <p class="text-gray-400 text-sm mb-4">แชทกับ AI เพื่อขอความช่วยเหลือ</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-yellow-400">เริ่มแชท</span>
+                        <i class="fas fa-arrow-right text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Study Consultation -->
+                <a href="study-consult.html" class="ios-card group animate-slide-up" style="--delay: 0.2s">
+                    <div class="ios-icon-container">
+                        <i class="fas fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">ปรึกษาการเรียน</h3>
+                    <p class="text-gray-400 text-sm mb-4">พูดคุยกับอาจารย์ที่ปรึกษา</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-yellow-400">เข้าสู่ห้องแชท</span>
+                        <i class="fas fa-arrow-right text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Meet Friends -->
+                <a href="meet-friends.html" class="ios-card group animate-slide-up" style="--delay: 0.3s">
+                    <div class="ios-icon-container">
+                        <i class="fas fa-users text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">นัดเพื่อน</h3>
+                    <p class="text-gray-400 text-sm mb-4">หาเพื่อนทำกิจกรรมและเรียน</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-yellow-400">โพสต์หาเพื่อน</span>
+                        <i class="fas fa-arrow-right text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Smart Parking -->
+                <a href="parking.html" class="ios-card group animate-slide-up" style="--delay: 0.4s">
+                    <div class="ios-icon-container">
+                        <i class="fas fa-car text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">Smart Parking</h3>
+                    <p class="text-gray-400 text-sm mb-4">จองที่จอดรถล่วงหน้า</p>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-yellow-400">จองที่จอดรถ</span>
+                        <i class="fas fa-arrow-right text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12">
+                <div class="ios-card text-center">
+                    <h4 class="text-2xl font-bold text-yellow-400">14</h4>
+                    <p class="text-sm text-gray-400">รายวิชาที่ลงทะเบียน</p>
+                </div>
+                <div class="ios-card text-center">
+                    <h4 class="text-2xl font-bold text-yellow-400">3.75</h4>
+                    <p class="text-sm text-gray-400">เกรดเฉลี่ย</p>
+                </div>
+                <div class="ios-card text-center">
+                    <h4 class="text-2xl font-bold text-yellow-400">5</h4>
+                    <p class="text-sm text-gray-400">กิจกรรมที่เข้าร่วม</p>
+                </div>
+                <div class="ios-card text-center">
+                    <h4 class="text-2xl font-bold text-yellow-400">89%</h4>
+                    <p class="text-sm text-gray-400">ความก้าวหน้า</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

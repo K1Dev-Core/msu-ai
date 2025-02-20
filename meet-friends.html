@@ -1,0 +1,496 @@
+<!-- meet-friends.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSU Meet | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-black min-h-screen font-prompt text-white">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-black/30 border-b border-white/5 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="main.html" class="hover:bg-white/5 p-2 rounded-full transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <span class="text-lg font-medium">MSU Meet</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="showNotifications()" class="icon-button">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">2</span>
+                </button>
+                <button onclick="createPost()" class="ios-button-primary hidden sm:flex items-center gap-2">
+                    <i class="fas fa-plus"></i>
+                    <span>สร้างโพสต์</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Category Tabs -->
+    <div class="fixed top-16 left-0 right-0 bg-black/30 backdrop-blur-xl z-40">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex gap-2 overflow-x-auto no-scrollbar">
+                <button onclick="filterPosts('all')" class="category-tab active">
+                    ทั้งหมด
+                </button>
+                <button onclick="filterPosts('study')" class="category-tab">
+                    <i class="fas fa-book"></i>
+                    เรียน
+                </button>
+                <button onclick="filterPosts('tutor')" class="category-tab">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    ติว
+                </button>
+                <button onclick="filterPosts('activity')" class="category-tab">
+                    <i class="fas fa-users"></i>
+                    กิจกรรม
+                </button>
+                <button onclick="filterPosts('sports')" class="category-tab">
+                    <i class="fas fa-futbol"></i>
+                    กีฬา
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-20 px-4">
+        <div class="container mx-auto max-w-3xl">
+            <!-- Search and Filters -->
+            <div class="ios-card p-4 mb-6">
+                <div class="flex gap-4">
+                    <div class="flex-1 bg-white/5 rounded-xl px-4 py-2 flex items-center gap-2">
+                        <i class="fas fa-search text-gray-400"></i>
+                        <input type="text" 
+                               placeholder="ค้นหาโพสต์..." 
+                               class="bg-transparent w-full focus:outline-none">
+                    </div>
+                    <button onclick="showFilters()" class="icon-button">
+                        <i class="fas fa-sliders-h"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Posts -->
+            <div class="space-y-6">
+                <!-- Study Group Post -->
+                <div class="post-card">
+                    <div class="flex items-start gap-3 mb-4">
+                        <img src="https://ui-avatars.com/api/?name=น้องก&background=random" 
+                             class="w-10 h-10 rounded-full" alt="Profile">
+                        <div class="flex-1">
+                            <h3 class="font-medium">น้องก</h3>
+                            <p class="text-sm text-gray-400">คณะวิทยาการสารสนเทศ • 10 นาทีที่แล้ว</p>
+                        </div>
+                        <div class="post-tag study">
+                            <i class="fas fa-book"></i>
+                            <span>เรียน</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p>หาเพื่อนติวรายวิชา IT101 Basic Programming ครับ เรียนวันอังคารที่จะถึงนี้ 
+                           มีใครสนใจติวด้วยกันไหมครับ? 🙏</p>
+                        <div class="mt-2 text-sm text-yellow-400">
+                            <span>#IT101 #Programming #Study</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <button class="action-button">
+                                <i class="fas fa-heart"></i>
+                                <span>12</span>
+                            </button>
+                            <button class="action-button">
+                                <i class="fas fa-comment"></i>
+                                <span>5</span>
+                            </button>
+                            <button class="action-button">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                        <button class="ios-button border-2 border-yellow-400">
+                            <i class="fas fa-user-plus"></i>
+                            <span>เข้าร่วม</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tutor Post -->
+                <div class="post-card">
+                    <div class="flex items-start gap-3 mb-4">
+                        <img src="https://ui-avatars.com/api/?name=พี่เอ&background=random" 
+                             class="w-10 h-10 rounded-full" alt="Profile">
+                        <div class="flex-1">
+                            <h3 class="font-medium">พี่เอ</h3>
+                            <p class="text-sm text-gray-400">คณะวิศวกรรมศาสตร์ • 30 นาทีที่แล้ว</p>
+                        </div>
+                        <div class="post-tag tutor">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>ติว</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p>รับติว Calculus 1 ครับ มีประสบการณ์สอนมา 2 ปี เน้นทำโจทย์ และเข้าใจง่าย 
+                           สนใจติดต่อ DM มาได้เลยครับ 📚</p>
+                        <div class="mt-2 text-sm text-yellow-400">
+                            <span>#Calculus #Math #Tutor</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <button class="action-button">
+                                <i class="fas fa-heart"></i>
+                                <span>24</span>
+                            </button>
+                            <button class="action-button">
+                                <i class="fas fa-comment"></i>
+                                <span>8</span>
+                            </button>
+                            <button class="action-button">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                        <button class="ios-button border-2 border-yellow-400">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>ติดต่อ</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sports Activity Post -->
+                <div class="post-card">
+                    <div class="flex items-start gap-3 mb-4">
+                        <img src="https://ui-avatars.com/api/?name=บี&background=random" 
+                             class="w-10 h-10 rounded-full" alt="Profile">
+                        <div class="flex-1">
+                            <h3 class="font-medium">บี</h3>
+                            <p class="text-sm text-gray-400">คณะวิทยาศาสตร์ • 1 ชั่วโมงที่แล้ว</p>
+                        </div>
+                        <div class="post-tag sports">
+                            <i class="fas fa-futbol"></i>
+                            <span>กีฬา</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p>หาเพื่อนเล่นบาสที่สนามข้างคณะวิทย์ตอน 17:00 น. วันนี้ครับ 
+                           ใครว่างมาเล่นด้วยกันไหมครับ? 🏀</p>
+                        <div class="mt-2 text-sm text-yellow-400">
+                            <span>#Basketball #Sports #MSU</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <button class="action-button">
+                                <i class="fas fa-heart"></i>
+                                <span>18</span>
+                            </button>
+                            <button class="action-button">
+                                <i class="fas fa-comment"></i>
+                                <span>6</span>
+                            </button>
+                            <button class="action-button">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                        <button class="ios-button border-2 border-yellow-400">
+                            <i class="fas fa-user-plus"></i>
+                            <span>เข้าร่วม</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Action Button (Mobile) -->
+    <button onclick="createPost()" 
+            class="fixed right-4 bottom-4 w-14 h-14 rounded-full bg-yellow-400 text-black 
+                   flex items-center justify-center shadow-lg sm:hidden">
+        <i class="fas fa-plus text-xl"></i>
+    </button>
+
+    <!-- Create Post Modal -->
+    <div id="create-post-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="ios-card max-w-xl w-full animate-slide-up">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold">สร้างโพสต์</h3>
+                    <button onclick="closeModal('create-post-modal')" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Category Selection -->
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">หมวดหมู่</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <label class="category-select">
+                                <input type="radio" name="category" value="study">
+                                <span>
+                                    <i class="fas fa-book"></i>
+                                    เรียน
+                                </span>
+                            </label>
+                            <label class="category-select">
+                                <input type="radio" name="category" value="tutor">
+                                <span>
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                    ติว
+                                </span>
+                            </label>
+                            <label class="category-select">
+                                <input type="radio" name="category" value="activity">
+                                <span>
+                                    <i class="fas fa-users"></i>
+                                    กิจกรรม
+                                </span>
+                            </label>
+                            <label class="category-select">
+                                <input type="radio" name="category" value="sports">
+                                <span>
+                                    <i class="fas fa-futbol"></i>
+                                    กีฬา
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Post Content -->
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">เนื้อหา</label>
+                        <textarea class="ios-input w-full h-32" 
+                                  placeholder="พิมพ์เนื้อหาโพสต์ของคุณ..."></textarea>
+                    </div>
+
+                    <!-- Tags -->
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">แฮชแท็ก</label>
+                        <input type="text" class="ios-input w-full" 
+                               placeholder="เพิ่มแฮชแท็ก เช่น #MSU #Study">
+                    </div>
+
+                    <button class="ios-button w-full hover-float border-2 border-yellow-400">
+                        โพสต์
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .category-tab {
+            @apply px-4 py-2 rounded-xl text-gray-400 whitespace-nowrap
+                   hover:bg-white/5 transition-colors flex items-center gap-2;
+        }
+
+        .category-tab.active {
+            @apply bg-yellow-400/20 text-yellow-400;
+        }
+
+        /* Post Card */
+        .post-card {
+            @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6
+                   hover:border-yellow-400/30 transition-all;
+        }
+
+        /* Post Tags */
+        .post-tag {
+            @apply px-3 py-1 rounded-full text-sm flex items-center gap-2;
+        }
+
+        .post-tag.study {
+            @apply bg-blue-500/20 text-blue-400;
+        }
+
+        .post-tag.tutor {
+            @apply bg-purple-500/20 text-purple-400;
+        }
+
+        .post-tag.activity {
+            @apply bg-green-500/20 text-green-400;
+        }
+
+        .post-tag.sports {
+            @apply bg-red-500/20 text-red-400;
+        }
+
+        /* Action Buttons */
+        .action-button {
+            @apply flex items-center gap-2 text-gray-400 hover:text-yellow-400 transition-colors;
+        }
+
+        /* Icon Button */
+        .icon-button {
+            @apply w-10 h-10 rounded-full flex items-center justify-center
+                   bg-white/5 hover:bg-white/10 transition-colors relative;
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            @apply absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 text-black
+                   rounded-full text-xs flex items-center justify-center;
+        }
+
+        /* Category Select */
+        .category-select {
+            @apply relative cursor-pointer;
+        }
+
+        .category-select input {
+            @apply absolute opacity-0;
+        }
+
+        .category-select span {
+            @apply block px-4 py-2 rounded-xl bg-white/5 text-gray-400
+                   flex items-center justify-center gap-2 transition-colors;
+        }
+
+        .category-select input:checked + span {
+            @apply bg-yellow-400/20 text-yellow-400;
+        }
+
+        /* Hide scrollbar */
+        .no-scrollbar {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
+    <script>
+        function createPost() {
+            document.getElementById('create-post-modal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function filterPosts(category) {
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Filter posts logic here
+            // You can add code to show/hide posts based on category
+        }
+
+        function showNotifications() {
+            // Create and show notifications modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="ios-card max-w-md w-full animate-slide-up">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold">การแจ้งเตือน</h3>
+                        <button onclick="this.closest('.fixed').remove()" 
+                                class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-3 rounded-xl bg-white/5">
+                            <div class="w-10 h-10 rounded-full bg-yellow-400/20 
+                                      flex items-center justify-center">
+                                <i class="fas fa-user-plus text-yellow-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">น้องบี เข้าร่วมกลุ่มติว IT101</p>
+                                <p class="text-sm text-gray-400">5 นาทีที่แล้ว</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-3 rounded-xl bg-white/5">
+                            <div class="w-10 h-10 rounded-full bg-yellow-400/20 
+                                      flex items-center justify-center">
+                                <i class="fas fa-comment text-yellow-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium">พี่เอ ตอบกลับโพสต์ของคุณ</p>
+                                <p class="text-sm text-gray-400">10 นาทีที่แล้ว</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function showFilters() {
+            // Create and show filters modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="ios-card max-w-md w-full animate-slide-up">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold">ตัวกรอง</h3>
+                        <button onclick="this.closest('.fixed').remove()" 
+                                class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">คณะ</label>
+                            <select class="ios-input w-full">
+                                <option>ทั้งหมด</option>
+                                <option>คณะวิทยาการสารสนเทศ</option>
+                                <option>คณะวิทยาศาสตร์</option>
+                                <option>คณะวิศวกรรมศาสตร์</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">ประเภท</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="ios-checkbox">
+                                    <span>หาเพื่อนเรียน</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="ios-checkbox">
+                                    <span>ติวเตอร์</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="ios-checkbox">
+                                    <span>กิจกรรม</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="ios-checkbox">
+                                    <span>กีฬา</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button class="ios-button-primary w-full">
+                            ใช้ตัวกรอง
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add any initialization code here
+        });
+    </script>
+</body>
+</html>
