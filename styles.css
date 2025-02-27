@@ -1,363 +1,592 @@
 /* styles.css */
-@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap");
 
 /* Base Styles */
 :root {
-    --accent-color: #fbbf24;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --card-border: rgba(255, 255, 255, 0.1);
+  --accent-color: #fbbf24;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.1);
 }
 
 body {
-    font-family: 'Prompt', sans-serif;
+  font-family: "Prompt", sans-serif;
 }
 
 /* Animated Background */
 .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.5;
-    animation: orbFloat 20s ease-in-out infinite;
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: orbFloat 20s ease-in-out infinite;
 }
 
 .orb-1 {
-    background: radial-gradient(circle at center, rgba(251, 191, 36, 0.2), transparent 70%);
-    width: 80vh;
-    height: 80vh;
-    top: -20vh;
-    right: -20vh;
-    animation-delay: -3s;
+  background: radial-gradient(
+    circle at center,
+    rgba(251, 191, 36, 0.2),
+    transparent 70%
+  );
+  width: 80vh;
+  height: 80vh;
+  top: -20vh;
+  right: -20vh;
+  animation-delay: -3s;
 }
 
 .orb-2 {
-    background: radial-gradient(circle at center, rgba(251, 191, 36, 0.1), transparent 70%);
-    width: 60vh;
-    height: 60vh;
-    bottom: -10vh;
-    left: -10vh;
-    animation-delay: -6s;
+  background: radial-gradient(
+    circle at center,
+    rgba(251, 191, 36, 0.1),
+    transparent 70%
+  );
+  width: 60vh;
+  height: 60vh;
+  bottom: -10vh;
+  left: -10vh;
+  animation-delay: -6s;
 }
 
 .grid-bg {
-    position: absolute;
-    inset: 0;
-    background-size: 50px 50px;
-    background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    animation: gridMove 20s linear infinite;
+  position: absolute;
+  inset: 0;
+  background-size: 50px 50px;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  animation: gridMove 20s linear infinite;
 }
 
 .noise-overlay {
-    position: absolute;
-    inset: 0;
-    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
-    opacity: 0.4;
-    mix-blend-mode: overlay;
+  position: absolute;
+  inset: 0;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+  opacity: 0.4;
+  mix-blend-mode: overlay;
 }
 
 /* iOS Card Styles */
 .ios-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 1.5rem;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ios-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(251, 191, 36, 0.2);
-    box-shadow: 
-        0 8px 20px rgba(251, 191, 36, 0.1),
-        0 0 0 1px rgba(251, 191, 36, 0.1);
+  transform: translateY(-5px);
+  border-color: rgba(251, 191, 36, 0.2);
+  box-shadow: 0 8px 20px rgba(251, 191, 36, 0.1),
+    0 0 0 1px rgba(251, 191, 36, 0.1);
 }
 
 .ios-card-large {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: 24px;
-    padding: 2rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 2rem;
 }
 
 /* Icon Container */
 .ios-icon-container {
-    width: 48px;
-    height: 48px;
-    background: rgba(251, 191, 36, 0.1);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    transition: all 0.3s ease;
+  width: 48px;
+  height: 48px;
+  background: rgba(251, 191, 36, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
 }
 
 .group:hover .ios-icon-container {
-    background: rgba(251, 191, 36, 0.2);
-    transform: scale(1.1) rotate(5deg);
+  background: rgba(251, 191, 36, 0.2);
+  transform: scale(1.1) rotate(5deg);
 }
 
 /* Animations */
 @keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(5%, 5%); }
-    50% { transform: translate(0, 10%); }
-    75% { transform: translate(-5%, 5%); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(5%, 5%);
+  }
+  50% {
+    transform: translate(0, 10%);
+  }
+  75% {
+    transform: translate(-5%, 5%);
+  }
 }
 
 @keyframes gridMove {
-    from { transform: translateY(0); }
-    to { transform: translateY(50px); }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(50px);
+  }
 }
 
 .animate-fade-in {
-    opacity: 0;
-    animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: var(--delay, 0s);
+  opacity: 0;
+  animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: var(--delay, 0s);
 }
 
 .animate-slide-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: var(--delay, 0s);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: var(--delay, 0s);
 }
 
 .hover-float {
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .hover-float:hover {
-    transform: translateY(-4px);
+  transform: translateY(-4px);
 }
 
 @keyframes fadeIn {
-    to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Buttons */
 .ios-button-primary {
-    background: var(--accent-color);
-    color: black;
-    padding: 0.75rem 2rem;
-    border-radius: 9999px;
-    font-weight: 500;
-    transition: all 0.3s ease;
+  background: var(--accent-color);
+  color: black;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .ios-button-primary:hover {
-    background: #f59e0b;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+  background: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
 }
 
 .ios-button-secondary {
-    background: rgba(251, 191, 36, 0.1);
-    color: var(--accent-color);
-    padding: 0.75rem 2rem;
-    border-radius: 9999px;
-    font-weight: 500;
-    transition: all 0.3s ease;
+  background: rgba(251, 191, 36, 0.1);
+  color: var(--accent-color);
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .ios-button-secondary:hover {
-    background: rgba(251, 191, 36, 0.2);
-    transform: translateY(-2px);
+  background: rgba(251, 191, 36, 0.2);
+  transform: translateY(-2px);
 }
 
 .ios-store-button {
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
 }
 
 .ios-store-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 /* Text Gradient */
 .ios-text-gradient {
-    background: linear-gradient(to right, #ffffff, var(--accent-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  background: linear-gradient(to right, #ffffff, var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* styles.css (ต่อ) */
 /* Image Effects */
 .ios-image-glow {
-    filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.2));
-    transition: filter 0.3s ease;
+  filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.2));
+  transition: filter 0.3s ease;
 }
 
 .ios-image-glow:hover {
-    filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.3));
+  filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.3));
 }
 
 /* Floating Animation */
 .animate-float {
-    animation: float 6s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* Responsive Adjustments */
 @media screen and (max-width: 768px) {
-    .ios-card, .ios-card-large {
-        padding: 1.25rem;
-    }
-    
-    .ios-button-primary,
-    .ios-button-secondary,
-    .ios-store-button {
-        width: 100%;
-        max-width: 50px;
-        margin: 0.5rem auto;
-        text-align: center;
-        justify-content: center;
-    }
+  .ios-card,
+  .ios-card-large {
+    padding: 1.25rem;
+  }
 
-    .orb {
-        opacity: 0.3;
-    }
+  .ios-button-primary,
+  .ios-button-secondary,
+  .ios-store-button {
+    width: 100%;
+    max-width: 50px;
+    margin: 0.5rem auto;
+    text-align: center;
+    justify-content: center;
+  }
 
-    .orb-1, .orb-2 {
-        width: 50vh;
-        height: 50vh;
-    }
+  .orb {
+    opacity: 0.3;
+  }
+
+  .orb-1,
+  .orb-2 {
+    width: 50vh;
+    height: 50vh;
+  }
 }
 
 /* Loading State */
 .loading {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .loading::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.1),
-        transparent
-    );
-    animation: shimmer 1.5s infinite;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Hover Effects */
 .hover-glow {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
 }
 
 /* Card Content Animations */
 .ios-card:hover .ios-icon-container i {
-    animation: iconPulse 0.5s ease;
+  animation: iconPulse 0.5s ease;
 }
 
 @keyframes iconPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Smooth Scroll Behavior */
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* Focus States */
 button:focus,
 a:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
 }
 
 /* Active States */
 .ios-button-primary:active,
 .ios-button-secondary:active,
 .ios-store-button:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 /* Input Fields (if needed) */
 .ios-input {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
-    color: white;
-    transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: white;
+  transition: all 0.3s ease;
 }
 
 .ios-input:focus {
-    border-color: var(--accent-color);
-    background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Dark Mode Optimization */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --card-bg: rgba(255, 255, 255, 0.03);
-        --card-border: rgba(255, 255, 255, 0.1);
-    }
+  :root {
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.1);
+  }
 }
 
 /* Print Styles */
 @media print {
-    .ios-card,
-    .ios-card-large {
-        box-shadow: none !important;
-        border: 1px solid #ddd;
-    }
+  .ios-card,
+  .ios-card-large {
+    box-shadow: none !important;
+    border: 1px solid #ddd;
+  }
 
-    .animated-bg,
-    .orb,
-    .grid-bg,
-    .noise-overlay {
-        display: none !important;
-    }
+  .animated-bg,
+  .orb,
+  .grid-bg,
+  .noise-overlay {
+    display: none !important;
+  }
 }
 
-  /* Hide scrollbars completely */
-  * {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
+/* Hide scrollbars completely */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 *::-webkit-scrollbar {
-    display: none; /* WebKit browsers */
+  display: none; /* WebKit browsers */
+}
+
+.ios-button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: max-content;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .ios-button-primary {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+
+
+ /* Background effects */
+ .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.3;
+    animation: orbFloat 15s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.7) 0%, rgba(251, 113, 36, 0.4) 70%);
+    top: -200px;
+    right: -100px;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.5) 0%, rgba(59, 130, 246, 0.3) 70%);
+    bottom: -150px;
+    left: -100px;
+}
+
+.grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 40px 40px;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuZGV2L3N2Z2pzIiB2aWV3Qm94PSIwIDAgNzAwIDcwMCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiPjxkZWZzPjxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgoJPGZlVHVyYnVsZW5jZSB0eXBlPSJ0dXJidWxlbmNlIiBiYXNlRnJlcXVlbmN5PSIwLjEiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjE1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHJlc3VsdD0idHVyYnVsZW5jZSI+PC9mZVR1cmJ1bGVuY2U+Cgk8ZmVTcGVjdWxhckxpZ2h0aW5nIHN1cmZhY2VTY2FsZT0iMTUiIHNwZWN1bGFyQ29uc3RhbnQ9IjAuNzUiIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iI2ZmZmZmZiIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KCQk8ZmVEaXN0YW50TGlnaHQgYXppbXV0aD0iMyIgZWxldmF0aW9uPSIxMDAiPjwvZmVEaXN0YW50TGlnaHQ+Cgk8L2ZlU3BlY3VsYXJMaWdodGluZz4KCTwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0idHJhbnNwYXJlbnQiPjwvcmVjdD48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZmlsdGVyPSJ1cmwoI25ubm9pc2UtZmlsdGVyKSI+PC9yZWN0Pjwvc3ZnPg==');
+    background-size: cover;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+}
+
+@keyframes orbFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+/* Font for Thai language */
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Sarabun', sans-serif;
+}
+
+/* Feature card */
+.feature-card {
+    @apply bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all relative overflow-hidden;
+    height: 100%;
+}
+
+.feature-card-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center mb-4;
+}
+
+/* Confirmation dialog */
+.confirmation-dialog {
+    @apply fixed top-0 left-0 w-full h-full flex items-center justify-center z-50;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+/* IOS Button Fix - Making it responsive */
+.ios-button-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fbbf24;
+    color: #000000;
+    border-radius: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    width: auto;
+    min-width: max-content;
+    box-sizing: border-box;
+}
+
+.ios-button-primary:hover {
+    background-color: #f59e0b;
+}
+
+.ios-button-primary:active {
+    transform: scale(0.98);
+}
+
+/* On smaller screens, adjust padding */
+@media (max-width: 640px) {
+    .ios-button-primary {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Confirmation modal */
+.confirm-modal {
+    @apply fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.confirm-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirm-modal-content {
+    @apply bg-stone-900/90 border border-white/10 rounded-xl p-6 max-w-md w-full mx-4;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+}
+
+.confirm-modal.active .confirm-modal-content {
+    transform: translateY(0);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+* {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+    display: none;
+    /* WebKit browsers */
 }

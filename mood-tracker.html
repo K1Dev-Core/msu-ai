@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บันทึกอารมณ์ | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Background effects */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.7) 0%, rgba(251, 113, 36, 0.4) 70%);
+            top: -200px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.5) 0%, rgba(59, 130, 246, 0.3) 70%);
+            bottom: -150px;
+            left: -100px;
+        }
+
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuZGV2L3N2Z2pzIiB2aWV3Qm94PSIwIDAgNzAwIDcwMCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiPjxkZWZzPjxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgoJPGZlVHVyYnVsZW5jZSB0eXBlPSJ0dXJidWxlbmNlIiBiYXNlRnJlcXVlbmN5PSIwLjEiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjE1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHJlc3VsdD0idHVyYnVsZW5jZSI+PC9mZVR1cmJ1bGVuY2U+Cgk8ZmVTcGVjdWxhckxpZ2h0aW5nIHN1cmZhY2VTY2FsZT0iMTUiIHNwZWN1bGFyQ29uc3RhbnQ9IjAuNzUiIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iI2ZmZmZmZiIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KCQk8ZmVEaXN0YW50TGlnaHQgYXppbXV0aD0iMyIgZWxldmF0aW9uPSIxMDAiPjwvZmVEaXN0YW50TGlnaHQ+Cgk8L2ZlU3BlY3VsYXJMaWdodGluZz4KCTwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0idHJhbnNwYXJlbnQiPjwvcmVjdD48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZmlsdGVyPSJ1cmwoI25ubm9pc2UtZmlsdGVyKSI+PC9yZWN0Pjwvc3ZnPg==');
+            background-size: cover;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        /* Font for Thai language */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        
+        /* Mood icons */
+        .mood-icon {
+            @apply w-16 h-16 flex items-center justify-center rounded-full cursor-pointer transition-all;
+        }
+        
+        .mood-icon i {
+            @apply text-3xl transition-transform;
+        }
+        
+        .mood-icon:hover i {
+            transform: scale(1.2);
+        }
+        
+        .mood-icon.selected {
+            @apply border-2 border-yellow-400;
+        }
+        
+        /* Calendar styles */
+        .calendar-day {
+            @apply w-10 h-10 flex items-center justify-center rounded-full cursor-pointer;
+        }
+        
+        .calendar-day.has-mood {
+            @apply bg-white/10;
+        }
+        
+        .calendar-day.mood-great {
+            @apply bg-green-500/20 text-green-400;
+        }
+        
+        .calendar-day.mood-good {
+            @apply bg-blue-500/20 text-blue-400;
+        }
+        
+        .calendar-day.mood-neutral {
+            @apply bg-gray-500/20 text-gray-400;
+        }
+        
+        .calendar-day.mood-bad {
+            @apply bg-yellow-500/20 text-yellow-400;
+        }
+        
+        .calendar-day.mood-terrible {
+            @apply bg-red-500/20 text-red-400;
+        }
+        
+        .calendar-day.today {
+            @apply border border-yellow-400;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Journal entry */
+        .journal-entry {
+            @apply bg-white/5 border border-white/10 p-5 rounded-xl mb-4 hover:bg-white/10 transition-all;
+        }
+    </style>
+</head>
+
+<body class="bg-stone-900 min-h-screen text-white overflow-x-hidden">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-stone-900/30 border-b border-white/5 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="ai-chat.html" class="hover:bg-white/5 p-2 rounded-full transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <span class="text-lg font-medium">บันทึกอารมณ์</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#" class="p-2 hover:bg-white/5 rounded-full transition-colors text-yellow-400">
+                    <i class="fas fa-heart"></i>
+                </a>
+                <a href="mental-resources.html" class="p-2 hover:bg-white/5 rounded-full transition-colors">
+                    <i class="fas fa-hands-helping"></i>
+                </a>
+                <a href="task-manager.html" class="p-2 hover:bg-white/5 rounded-full transition-colors">
+                    <i class="fas fa-tasks"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto pt-20 px-4 pb-20">
+        <!-- Today's Mood Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-6">วันนี้คุณรู้สึกอย่างไร?</h2>
+            <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <div class="mood-icon bg-green-500/20" onclick="selectMood('great', this)">
+                        <i class="fas fa-laugh-beam text-green-400"></i>
+                    </div>
+                    <div class="mood-icon bg-blue-500/20" onclick="selectMood('good', this)">
+                        <i class="fas fa-smile text-blue-400"></i>
+                    </div>
+                    <div class="mood-icon bg-gray-500/20" onclick="selectMood('neutral', this)">
+                        <i class="fas fa-meh text-gray-400"></i>
+                    </div>
+                    <div class="mood-icon bg-yellow-500/20" onclick="selectMood('bad', this)">
+                        <i class="fas fa-frown text-yellow-400"></i>
+                    </div>
+                    <div class="mood-icon bg-red-500/20" onclick="selectMood('terrible', this)">
+                        <i class="fas fa-sad-tear text-red-400"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-medium mb-3">บันทึกความรู้สึกของคุณ</h3>
+                    <textarea class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg resize-none h-32 focus:outline-none focus:border-yellow-400 transition-colors" placeholder="เขียนบันทึกความรู้สึกของคุณวันนี้..."></textarea>
+                    
+                    <div class="mt-4">
+                        <h4 class="text-sm text-gray-300 mb-2">สิ่งที่ส่งผลต่อความรู้สึก (เลือกอย่างน้อย 1 ข้อ)</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-sm" onclick="toggleFactor(this)">การเรียน</button>
+                            <button class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-sm" onclick="toggleFactor(this)">ความสัมพันธ์</button>
+                            <button class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-sm" onclick="toggleFactor(this)">การนอน</button>
+                            <button class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-sm" onclick="toggleFactor(this)">สุขภาพ</button>
+                            <button class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-sm" onclick="toggleFactor(this)">อาหาร</button>
+                            <button class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-sm" onclick="toggleFactor(this)">กิจกรรม</button>
+                            <button class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-sm" onclick="toggleFactor(this)">การเงิน</button>
+                            <button class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-sm" onclick="toggleFactor(this)">อื่นๆ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                        <button class="px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fas fa-save"></i>
+                            <span>บันทึกความรู้สึก</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Monthly Mood Calendar -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-6">ปฏิทินอารมณ์</h2>
+            <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-medium">มีนาคม 2569</h3>
+                    <div class="flex gap-2">
+                        <button class="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Calendar Header -->
+                <div class="grid grid-cols-7 gap-1 mb-2 text-center text-gray-400 text-sm">
+                    <div>อา</div>
+                    <div>จ</div>
+                    <div>อ</div>
+                    <div>พ</div>
+                    <div>พฤ</div>
+                    <div>ศ</div>
+                    <div>ส</div>
+                </div>
+                
+                <!-- Calendar Days (Sample) -->
+                <div class="grid grid-cols-7 gap-1">
+                    <!-- Week 1 -->
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day mood-good">2</div>
+                    <div class="calendar-day mood-neutral">3</div>
+                    
+                    <!-- Week 2 -->
+                    <div class="calendar-day mood-terrible">4</div>
+                    <div class="calendar-day mood-bad">5</div>
+                    <div class="calendar-day mood-neutral">6</div>
+                    <div class="calendar-day mood-neutral">7</div>
+                    <div class="calendar-day mood-good">8</div>
+                    <div class="calendar-day mood-good">9</div>
+                    <div class="calendar-day mood-great">10</div>
+                    
+                    <!-- Week 3 -->
+                    <div class="calendar-day mood-great">11</div>
+                    <div class="calendar-day mood-good">12</div>
+                    <div class="calendar-day mood-good">13</div>
+                    <div class="calendar-day mood-neutral">14</div>
+                    <div class="calendar-day mood-bad">15</div>
+                    <div class="calendar-day mood-terrible">16</div>
+                    <div class="calendar-day mood-bad">17</div>
+                    
+                    <!-- Week 4 -->
+                    <div class="calendar-day today">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    
+                    <!-- Week 5 -->
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                </div>
+                
+                <!-- Legend -->
+                <div class="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-300">
+                    <div class="flex items-center gap-1">
+                        <span class="w-3 h-3 rounded-full bg-green-500/70"></span>
+                        <span>ดีมาก</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-3 h-3 rounded-full bg-blue-500/70"></span>
+                        <span>ดี</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-3 h-3 rounded-full bg-gray-500/70"></span>
+                        <span>ปานกลาง</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-3 h-3 rounded-full bg-yellow-500/70"></span>
+                        <span>แย่</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-3 h-3 rounded-full bg-red-500/70"></span>
+                        <span>แย่มาก</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mood Insights -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">ข้อมูลเชิงลึกอารมณ์</h2>
+                <button class="text-yellow-400 hover:underline">ดูเพิ่มเติม</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Mood Pattern -->
+                <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+                    <h3 class="font-medium mb-4">รูปแบบอารมณ์ล่าสุด</h3>
+                    <p class="text-gray-300 mb-4">จากการวิเคราะห์บันทึกของคุณในช่วง 2 สัปดาห์ที่ผ่านมา</p>
+                    
+                    <div class="mb-4 bg-white/5 p-3 rounded-lg">
+                        <div class="text-sm text-gray-300 mb-1">ระดับความรู้สึกเฉลี่ย</div>
+                        <div class="flex items-center gap-2">
+                            <div class="text-lg font-medium">ดี</div>
+                            <div class="text-blue-400"><i class="fas fa-smile"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>วันที่ดีที่สุด</span>
+                                <span>วันเสาร์</span>
+                            </div>
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-green-400 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>วันที่แย่ที่สุด</span>
+                                <span>วันจันทร์</span>
+                            </div>
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-red-400 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>ปัจจัยที่พบบ่อย</span>
+                                <span>การเรียน, การนอน</span>
+                            </div>
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-yellow-400 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Suggestions -->
+                <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <h3 class="font-medium">คำแนะนำสำหรับคุณ</h3>
+                        <span class="bg-yellow-400/20 text-yellow-400 text-xs px-2 py-0.5 rounded-full">โดย AI</span>
+                    </div>
+                    
+                    <div class="text-gray-300 mb-4">จากรูปแบบอารมณ์ของคุณในช่วงที่ผ่านมา AI มีคำแนะนำดังนี้</div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="text-yellow-400 flex-shrink-0 mt-1">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">คำแนะนำการนอน</h4>
+                                <p class="text-sm text-gray-300">ลองปรับเวลานอนให้สม่ำเสมอ โดยเฉพาะในคืนวันอาทิตย์</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <div class="text-yellow-400 flex-shrink-0 mt-1">
+                                <i class="fas fa-coffee"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">การจัดการความเครียดช่วงเช้าวันจันทร์</h4>
+                                <p class="text-sm text-gray-300">เริ่มวันด้วยการทำสมาธิ 5 นาที และวางแผนงานในสัปดาห์</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <div class="text-yellow-400 flex-shrink-0 mt-1">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">การปรับตัวกับการเรียน</h4>
+                                <p class="text-sm text-gray-300">แบ่งงานเป็นชิ้นเล็กๆ และให้รางวัลตัวเองเมื่อทำเสร็จ</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full mt-5 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <i class="fas fa-comment-alt"></i>
+                        <span>ขอคำแนะนำเพิ่มเติมจาก AI</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Journal Entries -->
+        <div>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">บันทึกความรู้สึกย้อนหลัง</h2>
+                <div class="flex items-center gap-2">
+                    <select class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 focus:outline-none focus:border-yellow-400">
+                        <option>ทั้งหมด</option>
+                        <option>ดีมาก</option>
+                        <option>ดี</option>
+                        <option>ปานกลาง</option>
+                        <option>แย่</option>
+                        <option>แย่มาก</option>
+                    </select>
+                    <button class="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Journal Entry List -->
+            <div class="space-y-4">
+                <!-- Entry 1 -->
+                <div class="journal-entry">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-500/20">
+                                <i class="fas fa-laugh-beam text-green-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">ดีมาก</h3>
+                                <p class="text-sm text-gray-400">วันอาทิตย์, 10 มี.ค. 2569</p>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-white p-1">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    
+                    <p class="mb-4">วันนี้เป็นวันที่ดีมาก! สอบเสร็จแล้วและได้คะแนนที่น่าพอใจ ได้ไปเดินเล่นที่สวนสาธารณะ อากาศดีมาก รู้สึกโล่งใจที่ภาระงานเบาลง</p>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full">การเรียน</span>
+                        <span class="text-xs bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full">กิจกรรม</span>
+                    </div>
+                </div>
+                
+                <!-- Entry 2 -->
+                <div class="journal-entry">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-500/20">
+                                <i class="fas fa-smile text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">ดี</h3>
+                                <p class="text-sm text-gray-400">วันเสาร์, 9 มี.ค. 2569</p>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-white p-1">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    
+                    <p class="mb-4">วันนี้อ่านหนังสือสอบได้เยอะ ทำให้รู้สึกมั่นใจขึ้น แม้จะเหนื่อยแต่ก็คุ้มค่า พรุ่งนี้เป็นวันสอบแล้ว!</p>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full">การเรียน</span>
+                    </div>
+                </div>
+                
+                <!-- Entry 3 -->
+                <div class="journal-entry">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-red-500/20">
+                                <i class="fas fa-sad-tear text-red-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">แย่มาก</h3>
+                                <p class="text-sm text-gray-400">วันศุกร์, 8 มี.ค. 2569</p>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-white p-1">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    
+                    <p class="mb-4">วันนี้รู้สึกเครียดมากกับการสอบที่กำลังจะมาถึง นอนไม่ค่อยหลับเมื่อคืน รู้สึกไม่พร้อมเลย กังวลว่าจะทำได้ไม่ดี</p>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full">การเรียน</span>
+                        <span class="text-xs bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full">การนอน</span>
+                    </div>
+                </div>
+                
+                <!-- View More Button -->
+                <button class="w-full py-3 bg-white/5 hover:bg-white/10 rounded-xl text-center transition-colors">
+                    ดูเพิ่มเติม
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Function to select mood
+        function selectMood(mood, element) {
+            // Remove selected class from all mood icons
+            document.querySelectorAll('.mood-icon').forEach(icon => {
+                icon.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked mood icon
+            element.classList.add('selected');
+            
+            // Store selected mood in a variable (can be used when saving)
+            window.selectedMood = mood;
+            
+            console.log('Selected mood:', mood);
+        }
+        
+        // Function to toggle factor buttons
+        function toggleFactor(element) {
+            element.classList.toggle('bg-yellow-400');
+            element.classList.toggle('text-black');
+            element.classList.toggle('bg-white/5');
+            
+            // Update selected factors
+            updateSelectedFactors();
+        }
+        
+        // Function to track selected factors
+        function updateSelectedFactors() {
+            const selectedFactors = [];
+            
+            document.querySelectorAll('.bg-yellow-400').forEach(button => {
+                if (button.textContent) {
+                    selectedFactors.push(button.textContent);
+                }
+            });
+            
+            // Store selected factors in a variable (can be used when saving)
+            window.selectedFactors = selectedFactors;
+            
+            console.log('Selected factors:', selectedFactors);
+        }
+        
+        // Calendar day click handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarDays = document.querySelectorAll('.calendar-day');
+            
+            calendarDays.forEach(day => {
+                day.addEventListener('click', function() {
+                    // Here you would typically fetch and display the mood for that day
+                    console.log('Clicked on day:', day.textContent);
+                    
+                    // Example: Show a tooltip or modal with that day's mood details
+                    alert(`บันทึกวันที่ ${day.textContent} มีนาคม 2569`);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

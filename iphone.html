@@ -1,295 +1,466 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iPhone Preview | MSU-Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            background-color: #121212;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBackground {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a, #1a1a1a);
+            background-size: 200% 200%;
+            animation: gradientBackground 15s ease infinite;
+            z-index: -1;
+        }
+
+        .preview-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            max-width: 100%;
+        }
+    </style>
 </head>
-<body class="bg-zinc-900 min-h-screen flex items-center justify-center p-8">
-    <!-- iPhone 14 Pro Frame -->
 
-    <div class="iphone-frame">
-        <!-- Dynamic Island -->
-        <div class="dynamic-island animate-pulse">
-            <div class="dynamic-island-camera"></div>
-        </div>
-
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <div class="flex items-center gap-1">
-                <i class="fas fa-signal"></i>
-                <span>5G</span>
+<body>
+    <div class="background-gradient"></div>
+    
+    <div class="preview-container">
+        <!-- iPhone 14 Pro Frame -->
+        <div class="iphone-frame">
+            <!-- Dynamic Island -->
+            <div class="dynamic-island">
+                <div class="dynamic-island-inner">
+                    <div class="dynamic-island-camera"></div>
+                    <div class="dynamic-island-sensor"></div>
+                </div>
             </div>
-            <span>I:Hex</span>
-            <div class="flex items-center gap-1">
-                <span>100%</span>
-                <i class="fas fa-battery-full"></i>
+
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="flex items-center gap-1">
+                    <i class="fas fa-signal"></i>
+                    <span>5G</span>
+                </div>
+                <span>15:50</span>
+                <div class="flex items-center gap-1">
+                    <span>100%</span>
+                    <i class="fas fa-battery-full"></i>
+                </div>
             </div>
+
+            <!-- Content Area (iframe) -->
+            <div class="content-area">
+                <iframe src="main.html" frameborder="0" scrolling="yes"></iframe>
+            </div>
+
+            <!-- Home Indicator -->
+            <div class="home-indicator"></div>
         </div>
 
-        <!-- Content Area (iframe) -->
-        <div class="content-area">
-            <iframe src="index.html" frameborder="0" scrolling="yes"></iframe>
+        <!-- Side Controls -->
+        <div class="side-controls">
+            <button onclick="changePage('index.html')" class="control-button">
+                <i class="fas fa-home"></i>
+                <span>หน้าแรก</span>
+            </button>
+            <button onclick="changePage('main.html')" class="control-button">
+                <i class="fas fa-th-large"></i>
+                <span>หน้าหลัก</span>
+            </button>
+            <button onclick="reloadiPhone()" class="control-button">
+                <i class="fas fa-redo"></i>
+                <span>รีโหลด</span>
+            </button>
+            <button onclick="pulseIsland()" class="control-button">
+                <i class="fas fa-bell"></i>
+                <span>แจ้งเตือน</span>
+            </button>
+            <button onclick="window.location.href='index.html'" class="control-button">
+                <i class="fas fa-car-side"></i>
+                <span>สลับโหมด</span>
+            </button>
+            
         </div>
-
-        <!-- Home Indicator -->
-        <div class="home-indicator"></div>
-    </div>
-
-    <!-- Preview Controls -->
-    <div class="preview-controls">
-        <button onclick="rotateiPhone()" class="control-button">
-            <i class="fas fa-rotate"></i>
-            <span>Rotate</span>
-        </button>
-        <button onclick="reloadiPhone()" class="control-button">
-            <i class="fas fa-redo"></i>
-            <span>Reload</span>
-        </button>
     </div>
 
     <style>
         /* iPhone Frame */
         .iphone-frame {
             position: relative;
-            width: 620px; /* เพิ่มขนาดความกว้าง */
-            height: 1326px; /* เพิ่มขนาดความสูง */
-            background: #000;
-            border-radius: 65px; /* เพิ่มความโค้งของขอบ */
-            box-shadow: 0 0 0 15px #1a1a1a,
-                       0 0 0 16px #333;
+            width: 390px;
+            height: 844px;
+            background: #1a1a1a;
+            border-radius: 50px;
+            box-shadow: 
+                0 0 0 2px #333,
+                0 0 0 6px #222,
+                0 0 10px 6px rgba(0, 0, 0, 0.3),
+                0 20px 40px rgba(0, 0, 0, 0.4);
             overflow: hidden;
-            transition: all 0.5s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
         }
 
         /* Dynamic Island */
         .dynamic-island {
             position: absolute;
-            top: 20px; /* เพิ่มขนาดตามสัดส่วน */
+            top: 12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 200px; /* เพิ่มขนาด */
-            height: 60px; /* เพิ่มขนาด */
+            width: 105px;
+            height: 30px;
             background: #000;
-            border-radius: 25px;
+            border-radius: 20px;
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 0 2px rgba(20, 20, 20, 0.8);
+        }
+
+        .dynamic-island-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 70%;
+            height: 100%;
         }
 
         .dynamic-island-camera {
-            position: absolute;
-            top: 50%;
-            right: 40px; /* เพิ่มขนาดตามสัดส่วน */
-            transform: translateY(-50%);
-            width: 20px; /* เพิ่มขนาด */
-            height: 20px; /* เพิ่มขนาด */
-            background: #1a1a1a;
+            width: 10px;
+            height: 10px;
+            background: #1e1e1e;
+            border: 2px solid #333;
             border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .dynamic-island-sensor {
+            width: 6px;
+            height: 6px;
+            background: #1e1e1e;
+            border-radius: 50%;
+            margin-right: 10px;
         }
 
         /* Status Bar */
         .status-bar {
             position: absolute;
-            top: 25px; /* เพิ่มขนาดตามสัดส่วน */
+            top: 14px;
             left: 0;
             right: 0;
-            padding: 0 65px; /* เพิ่มขนาดตามสัดส่วน */
+            padding: 0 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: white;
-            font-size: 22px; /* เพิ่มขนาดฟอนต์ */
+            font-size: 14px;
             z-index: 900;
         }
 
-        /* Content Area */
+        /* Content Area - ปรับขอบให้มีระยะห่างที่เหมาะสม */
         .content-area {
             position: absolute;
-            top: 90px; /* ขยับลงมาให้พ้น Dynamic Island */
-            left: 10px;
-            right: 10px;
-            bottom: 20px; /* เหลือพื้นที่ด้านล่าง */
-            background: #fff;
-            border-radius: 40px; /* เพิ่มความมน */
+            top: 55px; /* เพิ่มระยะห่างจากด้านบนให้พ้น Dynamic Island */
+            left: 12px; /* เพิ่มขอบซ้าย */
+            right: 12px; /* เพิ่มขอบขวา */
+            bottom: 25px; /* เพิ่มระยะห่างจากด้านล่างให้พ้น Home Indicator */
             overflow: hidden;
+            border-radius: 40px; /* ทำให้มุมโค้งเข้ากับตัวเครื่อง */
         }
 
         .content-area iframe {
             width: 100%;
             height: 100%;
-            background: #fff;
             border: none;
-            overflow-y: scroll; /* เพิ่มแถบเลื่อน */
-        }
-
-        /* Scrollbar Styling */
-        .content-area iframe::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .content-area iframe::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .content-area iframe::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-
-        .content-area iframe::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            overflow-y: scroll;
+            border-radius: 40px;
+            background-color: #fff; /* เพิ่มสีพื้นหลังให้เห็นชัดเจน */
         }
 
         /* Home Indicator */
         .home-indicator {
             position: absolute;
-            bottom: 14px; /* เพิ่มขนาดตามสัดส่วน */
+            bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 220px; /* เพิ่มขนาด */
-            height: 8px; /* เพิ่มขนาด */
+            width: 134px;
+            height: 5px;
             background: #fff;
-            border-radius: 4px;
+            border-radius: 3px;
             z-index: 1000;
         }
 
-        /* Preview Controls */
-        .preview-controls {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
+        /* Side Controls */
+        .side-controls {
             display: flex;
-            gap: 20px;
+            flex-direction: column;
+            gap: 15px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(40, 40, 40, 0.8);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .control-button {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.1);
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(60, 60, 60, 0.8);
             color: white;
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 15px;
+            width: 180px;
         }
 
         .control-button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(80, 80, 80, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Landscape Mode */
-        .iphone-frame.landscape {
-            transform: rotate(90deg);
-            width: 1326px;
-            height: 620px;
-        }
-
-        /* Screen Recording Animation */
-        .recording .status-bar::before {
-            content: "• Recording";
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            color: red;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
+        .control-button:active {
+            transform: translateY(0);
+            box-shadow: none;
+            background: rgba(100, 100, 100, 0.9);
         }
 
         /* Battery Animation */
         @keyframes charging {
-            0% { color: #fff; }
-            50% { color: #4ade80; }
-            100% { color: #fff; }
+            0% {
+                color: #fff;
+            }
+            50% {
+                color: #4ade80;
+            }
+            100% {
+                color: #fff;
+            }
         }
 
         .status-bar .fa-battery-full {
             animation: charging 2s infinite;
         }
-          /* Hide scrollbars completely */
-          * {
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* Internet Explorer 10+ */
+
+        /* Dynamic Island Animation */
+        @keyframes pulseIsland {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.1);
+                width: 130px;
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
         }
 
-        *::-webkit-scrollbar {
-            display: none; /* WebKit browsers */
+        .island-pulse {
+            animation: pulseIsland 0.6s ease-in-out;
+        }
+
+        @keyframes expandIsland {
+            0% {
+                width: 105px;
+                height: 30px;
+            }
+            20% {
+                width: 280px;
+                height: 70px;
+                border-radius: 30px;
+            }
+            80% {
+                width: 280px;
+                height: 70px;
+                border-radius: 30px;
+            }
+            100% {
+                width: 105px;
+                height: 30px;
+            }
+        }
+
+        .island-expand {
+            animation: expandIsland 2s ease-in-out;
+        }
+
+        /* Notification Content */
+        .notification-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .preview-container {
+                flex-direction: column;
+            }
+            
+            .side-controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .control-button {
+                width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .iphone-frame {
+                transform: scale(0.8);
+            }
+            
+            .side-controls {
+                padding: 10px;
+            }
+            
+            .control-button {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
         }
     </style>
 
     <script>
         const iPhone = document.querySelector('.iphone-frame');
-        let isLandscape = false;
+        const dynamicIsland = document.querySelector('.dynamic-island');
+        let isStatusBarVisible = true;
 
-        function rotateiPhone() {
-            isLandscape = !isLandscape;
-            iPhone.classList.toggle('landscape');
-        }
+        // Add notification content inside dynamic island
+        const notificationContent = document.createElement('div');
+        notificationContent.className = 'notification-content';
+        dynamicIsland.appendChild(notificationContent);
 
         function reloadiPhone() {
             const iframe = document.querySelector('iframe');
-            iframe.src = iframe.src;
-        }
-
-        // Update time
-        function updateTime() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-US', { 
-                hour: 'numeric', 
-                minute: '2-digit', 
-                hour12: false 
-            });
-            document.querySelector('.status-bar span:nth-child(2)').textContent = timeStr;
-        }
-
-        setInterval(updateTime, 1000);
-
-        // Dynamic Island Animations
-        const dynamicIsland = document.querySelector('.dynamic-island');
-        
-        dynamicIsland.addEventListener('click', () => {
-            dynamicIsland.style.width = '500px'; // เพิ่มขนาดตามสัดส่วน
-            dynamicIsland.style.height = '140px'; // เพิ่มขนาดตามสัดส่วน
+            const currentPage = iframe.src;
             
-            // Reset after animation
+            // Animation for dynamic island
+            expandAndCollapse(dynamicIsland, "กำลังรีโหลด...");
+            
             setTimeout(() => {
-                dynamicIsland.style.width = '200px';
-                dynamicIsland.style.height = '60px';
-            }, 3000);
-        });
-
-        // Add touch events for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-        });
-
-        document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].clientX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            const SWIPE_THRESHOLD = 50;
-            const diff = touchEndX - touchStartX;
-
-            if (Math.abs(diff) > SWIPE_THRESHOLD) {
-                rotateiPhone();
+                iframe.src = 'about:blank';
+                setTimeout(() => {
+                    iframe.src = currentPage;
+                }, 100);
+            }, 500);
+        }
+        
+        function changePage(page) {
+            const iframe = document.querySelector('iframe');
+            
+            // Only change if it's a different page
+            if(!iframe.src.endsWith(page)) {
+                // Animation for dynamic island
+                expandAndCollapse(dynamicIsland, `กำลังไปที่${page.replace('.html', '')}`);
+                
+                setTimeout(() => {
+                    iframe.src = page;
+                }, 500);
             }
+        }
+        
+        function pulseIsland() {
+            // Add a pulse animation
+            dynamicIsland.classList.add('island-pulse');
+            
+            // Show notification icon for a moment
+            notificationContent.innerHTML = '<i class="fas fa-bell"></i>';
+            notificationContent.style.opacity = '1';
+            
+            // Remove animation class after it completes
+            setTimeout(() => {
+                dynamicIsland.classList.remove('island-pulse');
+                notificationContent.style.opacity = '0';
+            }, 600);
+        }
+
+        // Dynamic Island Click Effect
+        dynamicIsland.addEventListener('click', () => {
+            expandAndCollapse(dynamicIsland, "Dynamic Island");
+        });
+        
+        // Function to expand and collapse dynamic island with message
+        function expandAndCollapse(element, message) {
+            // Add animation class
+            element.classList.add('island-expand');
+            
+            // Show message in the middle of animation
+            setTimeout(() => {
+                notificationContent.innerHTML = message;
+                notificationContent.style.opacity = '1';
+            }, 400);
+            
+            // Hide message before animation ends
+            setTimeout(() => {
+                notificationContent.style.opacity = '0';
+            }, 1500);
+            
+            // Remove animation class after it completes
+            setTimeout(() => {
+                element.classList.remove('island-expand');
+            }, 2000);
         }
     </script>
 </body>
+
 </html>

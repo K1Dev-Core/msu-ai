@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องมือจัดการงาน | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Background effects */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.7) 0%, rgba(251, 113, 36, 0.4) 70%);
+            top: -200px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.5) 0%, rgba(59, 130, 246, 0.3) 70%);
+            bottom: -150px;
+            left: -100px;
+        }
+
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuZGV2L3N2Z2pzIiB2aWV3Qm94PSIwIDAgNzAwIDcwMCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiPjxkZWZzPjxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgoJPGZlVHVyYnVsZW5jZSB0eXBlPSJ0dXJidWxlbmNlIiBiYXNlRnJlcXVlbmN5PSIwLjEiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjE1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHJlc3VsdD0idHVyYnVsZW5jZSI+PC9mZVR1cmJ1bGVuY2U+Cgk8ZmVTcGVjdWxhckxpZ2h0aW5nIHN1cmZhY2VTY2FsZT0iMTUiIHNwZWN1bGFyQ29uc3RhbnQ9IjAuNzUiIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iI2ZmZmZmZiIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KCQk8ZmVEaXN0YW50TGlnaHQgYXppbXV0aD0iMyIgZWxldmF0aW9uPSIxMDAiPjwvZmVEaXN0YW50TGlnaHQ+Cgk8L2ZlU3BlY3VsYXJMaWdodGluZz4KCTwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0idHJhbnNwYXJlbnQiPjwvcmVjdD48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZmlsdGVyPSJ1cmwoI25ubm9pc2UtZmlsdGVyKSI+PC9yZWN0Pjwvc3ZnPg==');
+            background-size: cover;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        /* Font for Thai language */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        /* Progress bar styles */
+        .progress-ring {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Task item styles */
+        .task-item {
+            @apply bg-white/5 border border-white/10 p-4 rounded-xl mb-3 hover:bg-white/10 transition-all;
+        }
+
+        /* Priority indicator */
+        .priority-high {
+            @apply bg-red-500/70;
+        }
+        .priority-medium {
+            @apply bg-yellow-500/70;
+        }
+        .priority-low {
+            @apply bg-green-500/70;
+        }
+
+        /* Animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        /* Drag and drop styles */
+        .task-dragging {
+            @apply border-yellow-400 bg-white/10;
+        }
+        
+        .drop-zone-active {
+            @apply border-2 border-dashed border-yellow-400 bg-white/5;
+        }
+    </style>
+</head>
+
+<body class="bg-stone-900 min-h-screen text-white overflow-x-hidden">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-stone-900/30 border-b border-white/5 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="ai-chat.html" class="hover:bg-white/5 p-2 rounded-full transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <span class="text-lg font-medium">เครื่องมือจัดการงาน</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="mood-tracker.html" class="p-2 hover:bg-white/5 rounded-full transition-colors">
+                    <i class="fas fa-heart"></i>
+                </a>
+                <a href="mental-resources.html" class="p-2 hover:bg-white/5 rounded-full transition-colors">
+                    <i class="fas fa-hands-helping"></i>
+                </a>
+                <a href="#" class="p-2 hover:bg-white/5 rounded-full transition-colors text-yellow-400">
+                    <i class="fas fa-tasks"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto pt-20 px-4 pb-20">
+        <!-- Dashboard Overview -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-6">ภาพรวมการจัดการงาน</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Statistics -->
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium">สรุปงาน</h3>
+                        <span class="text-xs bg-white/10 py-1 px-2 rounded-full">วันนี้</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                            <div class="text-3xl font-bold text-yellow-400">3</div>
+                            <div class="text-xs text-gray-400">งานทั้งหมด</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-green-400">1</div>
+                            <div class="text-xs text-gray-400">เสร็จสิ้น</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-red-400">2</div>
+                            <div class="text-xs text-gray-400">คงเหลือ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Circle -->
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10 flex flex-col items-center justify-center">
+                    <div class="relative w-24 h-24">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                            <!-- Background circle -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#ffffff1a" stroke-width="10" />
+                            <!-- Progress circle -->
+                            <circle class="progress-ring" cx="50" cy="50" r="40" fill="none" stroke="#fbbf24" stroke-width="10" 
+                                    stroke-dasharray="251.2" stroke-dashoffset="175.84" />
+                        </svg>
+                        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center text-xl font-bold">
+                            33%
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-center text-gray-300">ความก้าวหน้าโดยรวม</div>
+                </div>
+
+                <!-- Time Management -->
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium">เวลาทำงาน</h3>
+                        <i class="fas fa-clock text-yellow-400"></i>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-400">เวลาคงเหลือวันนี้</div>
+                            <div class="text-2xl font-semibold">3.5 ชั่วโมง</div>
+                        </div>
+                        <button class="bg-white/10 hover:bg-white/15 transition-colors px-3 py-1 rounded-lg text-sm">
+                            เริ่มจับเวลา
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Management -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- To Do Column -->
+            <div class="task-column" id="todo-column">
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10 mb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-medium">ต้องทำ</h3>
+                        <span class="bg-white/10 px-2 py-0.5 rounded-full text-xs">2 งาน</span>
+                    </div>
+                    <div class="task-list" id="todo-tasks">
+                        <div class="task-item" draggable="true">
+                            <div class="flex justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full priority-high flex-shrink-0"></span>
+                                    <h4 class="font-medium">รายงานวิชาระบบฐานข้อมูล</h4>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button class="text-gray-400 hover:text-white"><i class="fas fa-pen"></i></button>
+                                    <button class="text-gray-400 hover:text-white"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-400 mb-3">เขียนรายงานการออกแบบฐานข้อมูลสำหรับระบบจัดการห้องสมุด</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-white/10 py-0.5 px-2 rounded-full">20 มี.ค. 2569</span>
+                                <span class="text-xs text-red-400">4 วันที่เหลือ</span>
+                            </div>
+                        </div>
+                        <div class="task-item" draggable="true">
+                            <div class="flex justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full priority-medium flex-shrink-0"></span>
+                                    <h4 class="font-medium">การบ้านคณิตศาสตร์ดิสครีต</h4>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button class="text-gray-400 hover:text-white"><i class="fas fa-pen"></i></button>
+                                    <button class="text-gray-400 hover:text-white"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-400 mb-3">ทำโจทย์บทที่ 4-5 หน้า 78-85</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-white/10 py-0.5 px-2 rounded-full">22 มี.ค. 2569</span>
+                                <span class="text-xs text-yellow-400">6 วันที่เหลือ</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full mt-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                        <i class="fas fa-plus text-yellow-400"></i>
+                        <span>เพิ่มงานใหม่</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- In Progress Column -->
+            <div class="task-column" id="progress-column">
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10 mb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-medium">กำลังทำ</h3>
+                        <span class="bg-white/10 px-2 py-0.5 rounded-full text-xs">0 งาน</span>
+                    </div>
+                    <div class="task-list min-h-[100px]" id="progress-tasks">
+                        <!-- Empty state -->
+                        <div class="border border-dashed border-white/10 rounded-xl py-10 px-4 text-center text-gray-400">
+                            <i class="fas fa-inbox text-2xl mb-2"></i>
+                            <p class="text-sm">ลากงานมาที่นี่เพื่อเริ่มทำงาน</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Done Column -->
+            <div class="task-column" id="done-column">
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10 mb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-medium">เสร็จสิ้น</h3>
+                        <span class="bg-white/10 px-2 py-0.5 rounded-full text-xs">1 งาน</span>
+                    </div>
+                    <div class="task-list" id="done-tasks">
+                        <div class="task-item opacity-70" draggable="true">
+                            <div class="flex justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full priority-low flex-shrink-0"></span>
+                                    <h4 class="font-medium line-through">งานนำเสนอวิชาภาษาอังกฤษ</h4>
+                                </div>
+                                <div class="flex gap-1">
+                                    <button class="text-gray-400 hover:text-white"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-400 mb-3 line-through">เตรียมสไลด์และซ้อมพูดสำหรับการนำเสนอหัวข้อ Technology in Education</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-white/10 py-0.5 px-2 rounded-full">15 มี.ค. 2569</span>
+                                <span class="text-xs text-green-400">เสร็จสิ้น</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Breakdown Tool -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold mb-6">แบ่งงานใหญ่เป็นชิ้นเล็ก</h2>
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2">
+                        <h3 class="font-medium mb-3">เพิ่มงานใหญ่ที่ต้องการแบ่ง</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm text-gray-300 mb-1">ชื่องาน</label>
+                                <input type="text" class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-yellow-400 transition-colors" placeholder="เช่น โปรเจกต์วิชาการเขียนโปรแกรม">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-300 mb-1">รายละเอียด</label>
+                                <textarea class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg resize-none h-24 focus:outline-none focus:border-yellow-400 transition-colors" placeholder="อธิบายรายละเอียดของงาน"></textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm text-gray-300 mb-1">วันที่ต้องส่ง</label>
+                                    <input type="date" class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-yellow-400 transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-300 mb-1">ระดับความสำคัญ</label>
+                                    <select class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-yellow-400 transition-colors">
+                                        <option value="high">สูง</option>
+                                        <option value="medium">ปานกลาง</option>
+                                        <option value="low">ต่ำ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:border-l md:border-white/10 md:pl-4">
+                        <h3 class="font-medium mb-3">AI ช่วยแบ่งงาน</h3>
+                        <p class="text-sm text-gray-400 mb-3">ให้ AI ช่วยคุณแบ่งงานใหญ่เป็นชิ้นเล็กๆ ที่จัดการได้ง่าย</p>
+                        <button class="w-full py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-robot"></i>
+                            <span>ให้ AI ช่วยแบ่งงาน</span>
+                        </button>
+                        <div class="mt-4">
+                            <div class="text-sm text-gray-300 mb-2">งานที่ AI แนะนำให้แบ่ง</div>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" class="w-4 h-4 accent-yellow-400">
+                                    <span class="text-sm">ออกแบบโครงสร้างโปรแกรม</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" class="w-4 h-4 accent-yellow-400">
+                                    <span class="text-sm">เขียนฟังก์ชันหลัก</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" class="w-4 h-4 accent-yellow-400">
+                                    <span class="text-sm">ออกแบบส่วนติดต่อผู้ใช้</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button class="px-6 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors mr-2">
+                        ยกเลิก
+                    </button>
+                    <button class="px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors">
+                        บันทึก
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Task drag and drop functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskItems = document.querySelectorAll('.task-item');
+            const taskLists = document.querySelectorAll('.task-list');
+            
+            // Add event listeners for drag and drop
+            taskItems.forEach(item => {
+                item.addEventListener('dragstart', dragStart);
+                item.addEventListener('dragend', dragEnd);
+            });
+            
+            taskLists.forEach(list => {
+                list.addEventListener('dragover', dragOver);
+                list.addEventListener('dragenter', dragEnter);
+                list.addEventListener('dragleave', dragLeave);
+                list.addEventListener('drop', drop);
+            });
+            
+            // Drag functions
+            function dragStart() {
+                this.classList.add('task-dragging');
+                setTimeout(() => this.style.opacity = '0.4', 0);
+            }
+            
+            function dragEnd() {
+                this.classList.remove('task-dragging');
+                this.style.opacity = '1';
+                
+                // Update counters after drag
+                updateCounters();
+            }
+            
+            function dragOver(e) {
+                e.preventDefault();
+            }
+            
+            function dragEnter(e) {
+                e.preventDefault();
+                this.classList.add('drop-zone-active');
+            }
+            
+            function dragLeave() {
+                this.classList.remove('drop-zone-active');
+            }
+            
+            function drop() {
+                this.classList.remove('drop-zone-active');
+                
+                const draggingTask = document.querySelector('.task-dragging');
+                
+                // If the drop target is the progress column and it has the empty state,
+                // remove it before adding the new task
+                if (this.id === 'progress-tasks' && this.querySelector('.border-dashed')) {
+                    this.innerHTML = '';
+                }
+                
+                this.appendChild(draggingTask);
+                
+                // If task is dropped in done column, add line-through
+                if (this.id === 'done-tasks') {
+                    const taskTitle = draggingTask.querySelector('h4');
+                    const taskDesc = draggingTask.querySelector('p');
+                    taskTitle.classList.add('line-through');
+                    taskDesc.classList.add('line-through');
+                    
+                    // Change status text
+                    const statusText = draggingTask.querySelector('.flex.justify-between.items-center span:last-child');
+                    statusText.textContent = 'เสร็จสิ้น';
+                    statusText.classList.remove('text-red-400', 'text-yellow-400');
+                    statusText.classList.add('text-green-400');
+                    
+                    // Add opacity
+                    draggingTask.classList.add('opacity-70');
+                } else {
+                    const taskTitle = draggingTask.querySelector('h4');
+                    const taskDesc = draggingTask.querySelector('p');
+                    taskTitle.classList.remove('line-through');
+                    taskDesc.classList.remove('line-through');
+                    
+                    // Reset opacity
+                    draggingTask.classList.remove('opacity-70');
+                }
+                
+                // If progress-tasks is now empty, add the empty state back
+                if (document.getElementById('progress-tasks').children.length === 0) {
+                    document.getElementById('progress-tasks').innerHTML = `
+                        <div class="border border-dashed border-white/10 rounded-xl py-10 px-4 text-center text-gray-400">
+                            <i class="fas fa-inbox text-2xl mb-2"></i>
+        <p class="text-sm">ลากงานมาที่นี่เพื่อเริ่มทำงาน</p>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Update counter function
+            function updateCounters() {
+                const todoCount = document.getElementById('todo-tasks').querySelectorAll('.task-item').length;
+                const progressCount = document.getElementById('progress-tasks').querySelectorAll('.task-item').length;
+                const doneCount = document.getElementById('done-tasks').querySelectorAll('.task-item').length;
+                
+                document.querySelector('#todo-column .bg-white\\/10.px-2').textContent = todoCount + ' งาน';
+                document.querySelector('#progress-column .bg-white\\/10.px-2').textContent = progressCount + ' งาน';
+                document.querySelector('#done-column .bg-white\\/10.px-2').textContent = doneCount + ' งาน';
+                
+                // Update dashboard counts
+                document.querySelector('.text-3xl.font-bold.text-yellow-400').textContent = todoCount + progressCount + doneCount;
+                document.querySelector('.text-3xl.font-bold.text-green-400').textContent = doneCount;
+                document.querySelector('.text-3xl.font-bold.text-red-400').textContent = todoCount + progressCount;
+                
+                // Update progress percentage
+                const totalTasks = todoCount + progressCount + doneCount;
+                const percentage = totalTasks === 0 ? 0 : Math.round((doneCount / totalTasks) * 100);
+                
+                // Update progress ring
+                const circle = document.querySelector('.progress-ring');
+                const circumference = 2 * Math.PI * 40;
+                const offset = circumference - (percentage / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+                
+                // Update percentage text
+                document.querySelector('.absolute.top-0 div').textContent = percentage + '%';
+            }
+        });
+    </script>
+</body>
+
+</html>

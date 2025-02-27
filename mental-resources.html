@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ทรัพยากรสุขภาพจิต | MSU-Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Background effects */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.7) 0%, rgba(251, 113, 36, 0.4) 70%);
+            top: -200px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.5) 0%, rgba(59, 130, 246, 0.3) 70%);
+            bottom: -150px;
+            left: -100px;
+        }
+
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuZGV2L3N2Z2pzIiB2aWV3Qm94PSIwIDAgNzAwIDcwMCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiPjxkZWZzPjxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgoJPGZlVHVyYnVsZW5jZSB0eXBlPSJ0dXJidWxlbmNlIiBiYXNlRnJlcXVlbmN5PSIwLjEiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjE1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHJlc3VsdD0idHVyYnVsZW5jZSI+PC9mZVR1cmJ1bGVuY2U+Cgk8ZmVTcGVjdWxhckxpZ2h0aW5nIHN1cmZhY2VTY2FsZT0iMTUiIHNwZWN1bGFyQ29uc3RhbnQ9IjAuNzUiIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iI2ZmZmZmZiIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KCQk8ZmVEaXN0YW50TGlnaHQgYXppbXV0aD0iMyIgZWxldmF0aW9uPSIxMDAiPjwvZmVEaXN0YW50TGlnaHQ+Cgk8L2ZlU3BlY3VsYXJMaWdodGluZz4KCTwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0idHJhbnNwYXJlbnQiPjwvcmVjdD48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZmlsdGVyPSJ1cmwoI25ubm9pc2UtZmlsdGVyKSI+PC9yZWN0Pjwvc3ZnPg==');
+            background-size: cover;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        /* Font for Thai language */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        
+        /* Resource card styles */
+        .resource-card {
+            @apply bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all relative overflow-hidden;
+        }
+        
+        .resource-card-accent {
+            @apply absolute top-0 left-0 w-1 h-full;
+        }
+        
+        /* Event card styles */
+        .event-card {
+            @apply bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-stone-900 min-h-screen text-white overflow-x-hidden">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-stone-900/30 border-b border-white/5 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="ai-chat.html" class="hover:bg-white/5 p-2 rounded-full transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <span class="text-lg font-medium">ทรัพยากรสุขภาพจิต</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="mood-tracker.html" class="p-2 hover:bg-white/5 rounded-full transition-colors">
+                    <i class="fas fa-heart"></i>
+                </a>
+                <a href="#" class="p-2 hover:bg-white/5 rounded-full transition-colors text-yellow-400">
+                    <i class="fas fa-hands-helping"></i>
+                </a>
+                <a href="task-manager.html" class="p-2 hover:bg-white/5 rounded-full transition-colors">
+                    <i class="fas fa-tasks"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto pt-20 px-4 pb-20">
+        <!-- Emergency Resources -->
+        <div class="mb-10">
+            <h2 class="text-2xl font-semibold mb-4">บริการฉุกเฉิน</h2>
+            <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-6 mb-6">
+                <div class="flex items-start gap-4">
+                    <div class="text-red-400 text-xl mt-1">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-red-400 mb-2">หากคุณกำลังประสบภาวะวิกฤติ</h3>
+                        <p class="text-gray-300 mb-4">หากคุณกำลังคิดทำร้ายตัวเองหรือผู้อื่น โปรดติดต่อบริการฉุกเฉินทันที</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <a href="tel:1323" class="flex items-center gap-3 bg-white/10 hover:bg-white/15 transition-colors p-3 rounded-lg">
+                                <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-phone text-red-400"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">สายด่วนสุขภาพจิต</div>
+                                    <div class="text-sm text-gray-400">1323 (ตลอด 24 ชั่วโมง)</div>
+                                </div>
+                            </a>
+                            
+                            <a href="tel:1667" class="flex items-center gap-3 bg-white/10 hover:bg-white/15 transition-colors p-3 rounded-lg">
+                                <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-ambulance text-red-400"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">สายด่วนรถพยาบาล</div>
+                                    <div class="text-sm text-gray-400">1669 (ฉุกเฉิน)</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Campus Resources -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-6">บริการของมหาวิทยาลัย</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Student Counseling Center -->
+                <div class="resource-card">
+                    <div class="resource-card-accent bg-yellow-400"></div>
+                    <div class="pl-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-medium text-lg">ศูนย์ให้คำปรึกษานิสิต</h3>
+                            <span class="bg-yellow-400/20 text-yellow-400 text-xs px-2 py-0.5 rounded-full">แนะนำ</span>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-4">ให้บริการปรึกษาปัญหาด้านการเรียน ความเครียด ปัญหาส่วนตัว โดยนักจิตวิทยาและผู้เชี่ยวชาญ</p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-map-marker-alt text-yellow-400 w-5 text-center"></i>
+                                <span>อาคารบริการนิสิต ชั้น 2 ห้อง 203</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-phone text-yellow-400 w-5 text-center"></i>
+                                <span>043-754-333 ต่อ 1234</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-clock text-yellow-400 w-5 text-center"></i>
+                                <span>จันทร์-ศุกร์: 08:30 - 16:30 น.</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-envelope text-yellow-400 w-5 text-center"></i>
+                                <span>counseling@msu.ac.th</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <a href="#" class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors flex-1 text-center">นัดหมาย</a>
+                            <a href="#" class="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors flex items-center justify-center">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- University Health Center -->
+                <div class="resource-card">
+                    <div class="resource-card-accent bg-blue-400"></div>
+                    <div class="pl-4">
+                        <h3 class="font-medium text-lg mb-3">ศูนย์บริการสุขภาพนิสิต</h3>
+                        <p class="text-gray-300 mb-4">ให้บริการตรวจรักษาทั่วไป มีแพทย์จิตเวชให้คำปรึกษา และบริการด้านสุขภาพอื่นๆ</p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-map-marker-alt text-blue-400 w-5 text-center"></i>
+                                <span>อาคารพยาบาล มหาวิทยาลัยมหาสารคาม</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-phone text-blue-400 w-5 text-center"></i>
+                                <span>043-754-350</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-clock text-blue-400 w-5 text-center"></i>
+                                <span>ทุกวัน: 08:00 - 20:00 น.</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-envelope text-blue-400 w-5 text-center"></i>
+                                <span>health@msu.ac.th</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <a href="#" class="px-4 py-2 bg-blue-400 hover:bg-blue-500 text-black font-medium rounded-lg transition-colors flex-1 text-center">นัดหมาย</a>
+                            <a href="#" class="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors flex items-center justify-center">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mental Health Events -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">กิจกรรมสุขภาพจิต</h2>
+                <a href="#" class="text-yellow-400 hover:underline">ดูทั้งหมด</a>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Event 1 -->
+                <div class="event-card">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="md:w-1/4 bg-white/5 rounded-lg overflow-hidden flex-shrink-0">
+                            <div class="h-40 bg-gradient-to-r from-yellow-400/30 to-purple-400/30 flex items-center justify-center">
+                                <i class="fas fa-brain text-6xl text-yellow-400/80"></i>
+                            </div>
+                        </div>
+                        <div class="md:w-3/4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-medium text-lg">เวิร์คช็อป: เทคนิคจัดการความเครียดช่วงสอบ</h3>
+                                <span class="bg-green-400/20 text-green-400 text-xs px-2 py-0.5 rounded-full">ฟรี</span>
+                            </div>
+                            
+                            <p class="text-gray-300 mb-4">เรียนรู้เทคนิคการจัดการความเครียดในช่วงสอบ การจัดการเวลา และกลยุทธ์การเรียนที่มีประสิทธิภาพ โดยนักจิตวิทยาการศึกษา</p>
+                            
+                            <div class="flex flex-wrap gap-4 text-sm text-gray-300 mb-4">
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-calendar text-yellow-400"></i>
+                                    <span>วันที่ 25 มีนาคม 2569</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-clock text-yellow-400"></i>
+                                    <span>13:00 - 16:00 น.</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-clock text-yellow-400"></i>
+                                    <span>13:00 - 16:00 น.</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                                    <span>ห้องประชุม B4 อาคารบริการนิสิต</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-user text-yellow-400"></i>
+                                    <span>โดย: อ.ดร.ศิรประภา วิชัยดิษฐ</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors flex-1 md:flex-none">ลงทะเบียน</button>
+                                <button class="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors">
+                                    <i class="far fa-calendar-plus"></i>
+                                    <span class="ml-1 hidden md:inline">เพิ่มในปฏิทิน</span>
+                                </button>
+                                <button class="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors">
+                                    <i class="fas fa-share-alt"></i>
+                                    <span class="ml-1 hidden md:inline">แชร์</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="event-card">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="md:w-1/4 bg-white/5 rounded-lg overflow-hidden flex-shrink-0">
+                            <div class="h-40 bg-gradient-to-r from-blue-400/30 to-green-400/30 flex items-center justify-center">
+                                <i class="fas fa-hands-helping text-6xl text-blue-400/80"></i>
+                            </div>
+                        </div>
+                        <div class="md:w-3/4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-medium text-lg">กลุ่มพูดคุย: การดูแลตัวเองสำหรับนิสิต</h3>
+                                <span class="bg-green-400/20 text-green-400 text-xs px-2 py-0.5 rounded-full">ฟรี</span>
+                            </div>
+                            
+                            <p class="text-gray-300 mb-4">พบปะพูดคุยในกลุ่มเล็กๆ เพื่อแบ่งปันประสบการณ์และเรียนรู้วิธีการดูแลตัวเองทั้งด้านร่างกายและจิตใจ</p>
+                            
+                            <div class="flex flex-wrap gap-4 text-sm text-gray-300 mb-4">
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-calendar text-yellow-400"></i>
+                                    <span>ทุกวันพุธ</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-clock text-yellow-400"></i>
+                                    <span>17:00 - 18:30 น.</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                                    <span>ห้องกิจกรรมนิสิต อาคารกิจการนิสิต</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-user text-yellow-400"></i>
+                                    <span>โดย: ชมรมสุขภาพจิตนิสิต</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors flex-1 md:flex-none">ลงทะเบียน</button>
+                                <button class="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors">
+                                    <i class="far fa-calendar-plus"></i>
+                                    <span class="ml-1 hidden md:inline">เพิ่มในปฏิทิน</span>
+                                </button>
+                                <button class="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors">
+                                    <i class="fas fa-share-alt"></i>
+                                    <span class="ml-1 hidden md:inline">แชร์</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Help Tools -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-6">เครื่องมือช่วยเหลือด่วน</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Breathing Exercise -->
+                <div class="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="w-20 h-20 bg-blue-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-wind text-5xl text-blue-400"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-medium text-lg text-center mb-2">แบบฝึกการหายใจ</h3>
+                    <p class="text-gray-300 text-center mb-4">ฝึกการหายใจเพื่อลดความเครียดและความวิตกกังวล</p>
+                    <button class="w-full py-2 bg-blue-400 hover:bg-blue-500 text-black font-medium rounded-lg transition-colors">เริ่มเลย (2 นาที)</button>
+                </div>
+                
+                <!-- Quick Relaxation -->
+                <div class="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="w-20 h-20 bg-purple-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-spa text-5xl text-purple-400"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-medium text-lg text-center mb-2">การผ่อนคลายเร็ว</h3>
+                    <p class="text-gray-300 text-center mb-4">เทคนิคผ่อนคลายกล้ามเนื้อและจิตใจแบบเร่งด่วน</p>
+                    <button class="w-full py-2 bg-purple-400 hover:bg-purple-500 text-black font-medium rounded-lg transition-colors">เริ่มเลย (3 นาที)</button>
+                </div>
+                
+                <!-- Stress Check -->
+                <div class="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-clipboard-check text-5xl text-green-400"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-medium text-lg text-center mb-2">ประเมินความเครียด</h3>
+                    <p class="text-gray-300 text-center mb-4">แบบประเมินความเครียดอย่างง่ายพร้อมคำแนะนำ</p>
+                    <button class="w-full py-2 bg-green-400 hover:bg-green-500 text-black font-medium rounded-lg transition-colors">เริ่มประเมิน</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat with AI -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-6">คุยกับ AI เพื่อรับคำแนะนำ</h2>
+            
+            <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center">
+                            <i class="fas fa-robot text-yellow-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium">MSU Mental Health AI</h3>
+                            <p class="text-sm text-gray-400">พร้อมให้คำปรึกษาและแนะนำเกี่ยวกับการดูแลสุขภาพจิต</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <!-- Sample chat messages (can be expanded) -->
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-yellow-400 text-sm"></i>
+                            </div>
+                            <div class="bg-white/5 rounded-xl rounded-tl-none p-3 max-w-3xl">
+                                <p>สวัสดีค่ะ นิสิต ฉันคือผู้ช่วย AI ด้านสุขภาพจิต ฉันสามารถให้คำแนะนำและเทคนิคในการจัดการความเครียด วิตกกังวล หรือปัญหาทั่วไปที่นิสิตมักพบได้ คุณต้องการคำแนะนำเกี่ยวกับอะไรหรือไม่คะ?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <div class="flex-1 bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+                            <input type="text" placeholder="พิมพ์ข้อความเพื่อคุยกับ AI..." class="w-full px-4 py-3 bg-transparent focus:outline-none">
+                        </div>
+                        <button class="bg-yellow-400 text-black rounded-xl p-3 hover:bg-yellow-300 transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <a href="ai-chat.html" class="text-yellow-400 hover:underline text-sm">ไปที่ห้องสนทนา AI เต็มรูปแบบ</a>
+                    </div>
+                </div>
+                
+                <div class="border-t border-white/10 bg-white/5 p-4">
+                    <div class="text-sm text-gray-400 mb-2">คำถามที่พบบ่อย:</div>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-sm transition-colors">เทคนิคจัดการความเครียดช่วงสอบ</button>
+                        <button class="px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-sm transition-colors">วิธีปรับปรุงคุณภาพการนอน</button>
+                        <button class="px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-sm transition-colors">เมื่อรู้สึกท้อแท้ควรทำอย่างไร</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Articles -->
+        <div>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">บทความสุขภาพจิต</h2>
+                <a href="#" class="text-yellow-400 hover:underline">ดูทั้งหมด</a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Article 1 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all">
+                    <div class="h-48 bg-gradient-to-r from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                        <i class="fas fa-brain text-5xl text-blue-400/80"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-medium">การดูแลสุขภาพจิตในช่วงสอบ</h3>
+                            <span class="text-xs text-gray-400">5 นาที</span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-4">เรียนรู้วิธีรักษาสมดุลทางอารมณ์และความเครียดในช่วงที่มีการสอบ และเทคนิคการเตรียมตัวอย่างมีประสิทธิภาพ</p>
+                        <a href="#" class="text-yellow-400 hover:underline text-sm">อ่านเพิ่มเติม</a>
+                    </div>
+                </div>
+                
+                <!-- Article 2 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all">
+                    <div class="h-48 bg-gradient-to-r from-green-500/20 to-yellow-500/20 flex items-center justify-center">
+                        <i class="fas fa-walking text-5xl text-green-400/80"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-medium">การออกกำลังกายเพื่อสุขภาพจิต</h3>
+                            <span class="text-xs text-gray-400">7 นาที</span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-4">ผลการวิจัยล่าสุดเกี่ยวกับประโยชน์ของการออกกำลังกายต่อสุขภาพจิต และวิธีเริ่มต้นง่ายๆ สำหรับนิสิต</p>
+                        <a href="#" class="text-yellow-400 hover:underline text-sm">อ่านเพิ่มเติม</a>
+                    </div>
+                </div>
+                
+                <!-- Article 3 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 transition-all">
+                    <div class="h-48 bg-gradient-to-r from-red-500/20 to-orange-500/20 flex items-center justify-center">
+                        <i class="fas fa-heart text-5xl text-red-400/80"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-medium">ความสัมพันธ์และสุขภาพจิต</h3>
+                            <span class="text-xs text-gray-400">6 นาที</span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-4">เข้าใจความสำคัญของการสร้างความสัมพันธ์ที่ดี และวิธีรับมือกับความขัดแย้งอย่างสร้างสรรค์</p>
+                        <a href="#" class="text-yellow-400 hover:underline text-sm">อ่านเพิ่มเติม</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Sample script for breathing exercise
+        document.addEventListener('DOMContentLoaded', function() {
+            const breathingButton = document.querySelector('.bg-blue-400.hover\\:bg-blue-500');
+            
+            if (breathingButton) {
+                breathingButton.addEventListener('click', function() {
+                    // Simple alert for demonstration
+                    alert('เริ่มแบบฝึกการหายใจ:\n\n1. หายใจเข้าช้าๆ นับ 1-4\n2. กลั้นหายใจ นับ 1-7\n3. หายใจออกช้าๆ นับ 1-8\n4. ทำซ้ำ 5 รอบ');
+                    
+                    // In a real implementation, this would open a modal with an interactive
+                    // breathing exercise animation and guided instructions
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

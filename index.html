@@ -1,97 +1,672 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MSU-Intelligence</title>
+    <title>ยินดีต้อนรับสู่ MSU-Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <style>
+        /* Background effects */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.7) 0%, rgba(251, 113, 36, 0.4) 70%);
+            top: -200px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.5) 0%, rgba(59, 130, 246, 0.3) 70%);
+            bottom: -150px;
+            left: -100px;
+        }
+
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuZGV2L3N2Z2pzIiB2aWV3Qm94PSIwIDAgNzAwIDcwMCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiPjxkZWZzPjxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgoJPGZlVHVyYnVsZW5jZSB0eXBlPSJ0dXJidWxlbmNlIiBiYXNlRnJlcXVlbmN5PSIwLjEiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjE1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHJlc3VsdD0idHVyYnVsZW5jZSI+PC9mZVR1cmJ1bGVuY2U+Cgk8ZmVTcGVjdWxhckxpZ2h0aW5nIHN1cmZhY2VTY2FsZT0iMTUiIHNwZWN1bGFyQ29uc3RhbnQ9IjAuNzUiIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iI2ZmZmZmZiIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KCQk8ZmVEaXN0YW50TGlnaHQgYXppbXV0aD0iMyIgZWxldmF0aW9uPSIxMDAiPjwvZmVEaXN0YW50TGlnaHQ+Cgk8L2ZlU3BlY3VsYXJMaWdodGluZz4KCTwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0idHJhbnNwYXJlbnQiPjwvcmVjdD48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZmlsdGVyPSJ1cmwoI25ubm9pc2UtZmlsdGVyKSI+PC9yZWN0Pjwvc3ZnPg==');
+            background-size: cover;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        /* Font for Thai language */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        /* Hero text animation */
+        .hero-text span {
+            opacity: 0;
+            transform: translateY(20px);
+            display: inline-block;
+            animation: fadeUp 0.8s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            transform: translateY(20px);
+            opacity: 0;
+            animation: cardFadeIn 0.5s forwards;
+        }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Feature cards */
+        .feature-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .feature-card:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        /* Button styles */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fbbf24;
+            color: #000000;
+            border-radius: 1rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            width: auto;
+            min-width: max-content;
+            box-sizing: border-box;
+        }
+
+        .btn-primary:hover {
+            background-color: #f59e0b;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-radius: 1rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            width: auto;
+            min-width: max-content;
+            box-sizing: border-box;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* On smaller screens, adjust padding */
+        @media (max-width: 640px) {
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Scroll animation */
+        .scroll-down {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Feature card */
+        .feature-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        * {
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* Internet Explorer 10+ */
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+            /* WebKit browsers */
+        }
+    </style>
 </head>
-<body class="bg-black min-h-screen font-prompt text-white overflow-x-hidden">
-    <!-- Animated Background -->
+
+<body class="bg-stone-900 min-h-screen text-white">
+    <!-- Background Effects -->
     <div class="fixed inset-0 -z-10 overflow-hidden">
-        <!-- Gradient Orbs -->
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
-        <!-- Animated Grid -->
         <div class="grid-bg"></div>
-        <!-- Noise Overlay -->
         <div class="noise-overlay"></div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-black/30 border-b border-white/5 z-50">
-        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2 animate-fade-in">
-                <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png" alt="Logo" class="h-8 w-8">
-                <span class="text-lg font-medium hidden sm:inline">MSU Intelligence</span>
+    <!-- Header/Navbar -->
+    <header class="sticky top-0 backdrop-blur-xl bg-stone-900/30 border-b border-white/5 z-40">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png"
+                    alt="MSU Logo" class="h-8 w-auto">
+                <span class="text-lg font-medium">MSU Intelligence</span>
             </div>
-           
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#features" class="text-gray-300 hover:text-white transition-colors">คุณสมบัติ</a>
+                <a href="#about" class="text-gray-300 hover:text-white transition-colors">เกี่ยวกับเรา</a>
+
+            </div>
+            <div>
+                <a href="login.html" class="btn-primary">
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    <span>เข้าสู่ระบบ</span>
+                </a>
+            </div>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
-    <section class="min-h-screen pt-24 pb-20 flex items-center relative">
-        <div class="container mx-auto px-4 sm:px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16 relative">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight ios-text-gradient animate-slide-up">
-                    MSU Intelligence
-                </h1>
-                <p class="text-lg sm:text-xl text-gray-300 animate-slide-up" style="--delay: 0.2s">
-                    ระบบอัจฉริยะเพื่อการศึกษา มหาวิทยาลัยมหาสารคาม
-                </p>
+    <section class="min-h-screen flex items-center py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-10">
+                <div class="md:w-1/2 space-y-6">
+                    <div class="hero-text">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                            <span style="animation-delay: 0.1s;">ยกระดับ</span>
+                            <span style="animation-delay: 0.2s;">การศึกษา</span>
+                            <span style="animation-delay: 0.3s;">ของคุณ</span>
+                            <span style="animation-delay: 0.4s;">ด้วย</span>
+                            <span style="animation-delay: 0.5s;" class="text-yellow-400">AI</span>
+                        </h1>
+                        <p class="text-xl text-gray-300 mb-8"
+                            style="animation-delay: 0.6s; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.6s forwards;">
+                            MSU Intelligence ช่วยให้นิสิตจัดการชีวิตการเรียนได้อย่างมีประสิทธิภาพด้วยเทคโนโลยี AI
+                            ที่ทันสมัย
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-4"
+                        style="opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.8s forwards;">
+                        <a href="login.html" class="btn-primary">
+                            <span>เริ่มต้นใช้งาน</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#features" class="btn-secondary">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            <span>เรียนรู้เพิ่มเติม</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center"
+                    style="opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.7s forwards;">
+                    <div class="relative">
+                        <div
+                            class="w-72 h-72 md:w-96 md:h-96 bg-gradient-to-br from-yellow-400/30 to-blue-500/30 rounded-full flex items-center justify-center">
+                            <div
+                                class="w-56 h-56 md:w-80 md:h-80 bg-stone-900/50 backdrop-blur-lg rounded-full flex items-center justify-center relative overflow-hidden border border-white/10">
+                                <div class="text-7xl md:text-8xl text-yellow-400">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-stone-900 opacity-50">
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute top-0 right-0 w-20 h-20 bg-blue-500/30 rounded-full backdrop-blur-sm animate-pulse">
+                        </div>
+                        <div class="absolute bottom-10 left-0 w-12 h-12 bg-yellow-400/30 rounded-full backdrop-blur-sm animate-pulse"
+                            style="animation-delay: 1s;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-center hidden md:block">
+                <div class="scroll-down text-yellow-400">
+                    <i class="fas fa-chevron-down text-2xl"></i>
+                </div>
+                <p class="text-sm text-gray-400 mt-2">เลื่อนลงเพื่อเรียนรู้เพิ่มเติม</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">ฟีเจอร์หลัก</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">
+                    ค้นพบประสบการณ์การเรียนรู้ที่ทันสมัยด้วยคุณสมบัติที่ออกแบบมาเพื่อช่วยให้คุณประสบความสำเร็จ</p>
             </div>
 
-            <!-- Feature Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                <!-- AI Assistant -->
-                <div class="ios-card group animate-slide-up" style="--delay: 0.3s">
-                    <div class="ios-icon-container">
-                        <i class="fas fa-robot text-xl"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="feature-card bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all feature-box">
+                    <div
+                        class="w-16 h-16 bg-yellow-400/20 rounded-full flex items-center justify-center mb-6 feature-icon">
+                        <i class="fas fa-robot text-3xl text-yellow-400"></i>
                     </div>
-                    <h3 class="text-lg font-medium mb-2">AI Assistant</h3>
-                    <p class="text-gray-400 text-sm">ผู้ช่วยอัจฉริยะพร้อมตอบทุกคำถาม</p>
+                    <h3 class="text-xl font-semibold mb-3">AI Assistant</h3>
+                    <p class="text-gray-300">สนทนากับ AI ที่ชาญฉลาดเพื่อช่วยตอบคำถาม แนะนำการเรียน
+                        และให้ความช่วยเหลือตลอด 24 ชั่วโมง</p>
                 </div>
 
-                <!-- Study Consultation -->
-                <div class="ios-card group animate-slide-up" style="--delay: 0.4s">
-                    <div class="ios-icon-container">
-                        <i class="fas fa-graduation-cap text-xl"></i>
+                <!-- Feature 2 -->
+                <div
+                    class="feature-card bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all feature-box">
+                    <div
+                        class="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mb-6 feature-icon">
+                        <i class="fas fa-tasks text-3xl text-blue-400"></i>
                     </div>
-                    <h3 class="text-lg font-medium mb-2">ปรึกษาการเรียน</h3>
-                    <p class="text-gray-400 text-sm">คำแนะนำจากผู้เชี่ยวชาญ</p>
+                    <h3 class="text-xl font-semibold mb-3">เครื่องมือจัดการงาน</h3>
+                    <p class="text-gray-300">แบ่งงานใหญ่เป็นชิ้นเล็กๆ จัดลำดับความสำคัญ
+                        และติดตามความก้าวหน้าได้อย่างมีประสิทธิภาพ</p>
                 </div>
 
-                <!-- Meet Friends -->
-                <div class="ios-card group animate-slide-up" style="--delay: 0.5s">
-                    <div class="ios-icon-container">
-                        <i class="fas fa-users text-xl"></i>
+                <!-- Feature 3 -->
+                <div
+                    class="feature-card bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all feature-box">
+                    <div
+                        class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-6 feature-icon">
+                        <i class="fas fa-heart text-3xl text-red-400"></i>
                     </div>
-                    <h3 class="text-lg font-medium mb-2">นัดเพื่อน</h3>
-                    <p class="text-gray-400 text-sm">ค้นหาเพื่อนเรียนและทำกิจกรรม</p>
+                    <h3 class="text-xl font-semibold mb-3">บันทึกอารมณ์</h3>
+                    <p class="text-gray-300">ติดตามสุขภาพจิตของคุณ บันทึกความรู้สึก
+                        และรับคำแนะนำเพื่อรักษาสมดุลทางอารมณ์</p>
                 </div>
 
-                <!-- Smart Parking -->
-                <div class="ios-card group animate-slide-up" style="--delay: 0.6s">
-                    <div class="ios-icon-container">
-                        <i class="fas fa-car text-xl"></i>
+                <!-- Feature 4 -->
+                <div
+                    class="feature-card bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all feature-box">
+                    <div
+                        class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-6 feature-icon">
+                        <i class="fas fa-calendar-alt text-3xl text-green-400"></i>
                     </div>
-                    <h3 class="text-lg font-medium mb-2">Smart Parking</h3>
-                    <p class="text-gray-400 text-sm">จองที่จอดรถล่วงหน้า</p>
+                    <h3 class="text-xl font-semibold mb-3">ตารางอัจฉริยะ</h3>
+                    <p class="text-gray-300">จัดการตารางเรียน การบ้าน และกิจกรรมต่างๆ
+                        ด้วยระบบที่เชื่อมโยงกับปฏิทินของมหาวิทยาลัย</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- CTA Section -->
-            <div class="text-center mt-16 animate-fade-in" style="--delay: 0.8s">
-                <a href="login.html" class="ios-button-secondary mx- hover-float">
-                    เริ่มต้นใช้งาน
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-stone-800/30">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">เกี่ยวกับ MSU Intelligence</h2>
+                    <p class="text-gray-300 mb-6">
+                        MSU Intelligence เป็นแพลตฟอร์มที่ออกแบบโดยนิสิตเพื่อนิสิต
+                        ด้วยความเข้าใจในความท้าทายของชีวิตในมหาวิทยาลัย
+                        เราจึงสร้างระบบที่ช่วยให้คุณจัดการเวลา ความเครียด และภาระงานได้อย่างมีประสิทธิภาพ
+                    </p>
+                    <p class="text-gray-300 mb-6">
+                        ด้วยการนำเทคโนโลยี AI มาประยุกต์ใช้
+                        เราสามารถมอบประสบการณ์การศึกษาที่ปรับให้เหมาะกับความต้องการของแต่ละบุคคล
+                        ช่วยให้นิสิตเพิ่มประสิทธิภาพการเรียนรู้และมีเวลาสำหรับการทำกิจกรรมนอกห้องเรียนมากขึ้น
+                    </p>
+                    <div class="flex gap-6 mt-8">
+                        <div>
+                            <div class="text-3xl font-bold text-yellow-400">3,000+</div>
+                            <div class="text-gray-400">นิสิตที่ใช้งาน</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-yellow-400">98%</div>
+                            <div class="text-gray-400">ความพึงพอใจ</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-yellow-400">24/7</div>
+                            <div class="text-gray-400">พร้อมให้บริการ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div
+                            class="bg-gradient-to-br from-yellow-400/30 to-yellow-500/10 rounded-xl p-6 border border-yellow-400/20 h-64">
+                            <div class="w-12 h-12 bg-yellow-400/20 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-lightbulb text-xl text-yellow-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">พันธกิจ</h3>
+                            <p class="text-gray-300">ช่วยให้นิสิตบรรลุศักยภาพสูงสุดด้วยการสนับสนุนทางเทคโนโลยีที่ทันสมัย
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all h-64 transform translate-y-8">
+                            <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-eye text-xl text-blue-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">วิสัยทัศน์</h3>
+                            <p class="text-gray-300">
+                                สร้างอนาคตที่การศึกษาเป็นประสบการณ์ที่ปรับเปลี่ยนตามความต้องการของแต่ละบุคคล</p>
+                        </div>
+                        <div
+                            class="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all h-64">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-seedling text-xl text-green-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">คุณค่า</h3>
+                            <p class="text-gray-300">เราให้ความสำคัญกับนวัตกรรม ความเป็นส่วนตัว
+                                และการสร้างผลกระทบเชิงบวก</p>
+                        </div>
+                        <div
+                            class="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all h-64 transform translate-y-8">
+                            <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-users text-xl text-purple-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">ทีมงาน</h3>
+                            <p class="text-gray-300">
+                                กลุ่มนิสิตและอาจารย์ที่มีความหลงใหลในการสร้างเครื่องมือเพื่อการศึกษา</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">เสียงจากผู้ใช้</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">ความคิดเห็นจากนิสิตที่ใช้งาน MSU Intelligence</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-lg font-bold">
+                            ธ
+                        </div>
+                        <div>
+                            <div class="font-medium">ธนาวัฒน์ สุขใจ</div>
+                            <div class="text-sm text-gray-400">นิสิตปี 3 วิศวกรรมศาสตร์</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"AI Assistant ช่วยฉันมากในการทำความเข้าใจเนื้อหาที่ซับซ้อน
+                        แถมเครื่องมือจัดการงานก็ทำให้ฉันบริหารเวลาได้ดีขึ้นมาก"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-lg font-bold">
+                            น
+                        </div>
+                        <div>
+                            <div class="font-medium">นภาพร วรรณรัตน์</div>
+                            <div class="text-sm text-gray-400">นิสิตปี 2 คณะวิทยาศาสตร์</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"ฟีเจอร์บันทึกอารมณ์ช่วยให้ฉันรู้จักตัวเองมากขึ้น
+                        และรับมือกับความเครียดช่วงสอบได้ดี เป็นระบบที่ใส่ใจผู้ใช้จริงๆ"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-lg font-bold">
+                            ส
+                        </div>
+                        <div>
+                            <div class="font-medium">สมชาย ใจดี</div>
+                            <div class="text-sm text-gray-400">นิสิตปี 4 คณะบริหารธุรกิจ</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"ตารางอัจฉริยะช่วยให้ฉันไม่พลาดการเรียนและการส่งงานอีกเลย
+                        แถมยังมีการแจ้งเตือนที่ชาญฉลาดทำให้การวางแผนง่ายขึ้นมาก"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-yellow-400/20 to-yellow-500/10 border-y border-yellow-400/20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">พร้อมที่จะเริ่มต้นใช้งานแล้วหรือยัง?</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                ยกระดับประสบการณ์การศึกษาของคุณด้วย MSU Intelligence วันนี้<br>
+                ระบบที่จะช่วยให้คุณจัดการชีวิตการเรียนได้อย่างมีประสิทธิภาพยิ่งขึ้น
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="login.html" class="btn-primary text-lg px-8 py-3">
+                    <span>เริ่มต้นใช้งานฟรี</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#contact" class="btn-secondary text-lg px-8 py-3">
+                    <i class="fas fa-question-circle mr-2"></i>
+                    <span>สอบถามข้อมูลเพิ่มเติม</span>
                 </a>
             </div>
         </div>
     </section>
 
 
+
+    <!-- Footer -->
+    <footer class="bg-stone-900/50 backdrop-blur-xl border-t border-white/5 py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between gap-8">
+                <div class="md:w-1/3">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png"
+                            alt="MSU Logo" class="h-8 w-auto">
+                        <span class="text-lg font-medium">MSU Intelligence</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        แพลตฟอร์มอัจฉริยะที่ช่วยให้นิสิตจัดการชีวิตการเรียนได้อย่างมีประสิทธิภาพ ด้วยเทคโนโลยี AI
+                        ที่ทันสมัย
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-line"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4">เมนูหลัก</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">คุณสมบัติ</a>
+                        </li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">เกี่ยวกับเรา</a>
+                        </li>
+
+                        <li><a href="login.html"
+                                class="text-gray-400 hover:text-white transition-colors">เข้าสู่ระบบ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4">คุณสมบัติ</h4>
+                    <ul class="space-y-2">
+                        <li><a href="ai-chat.html" class="text-gray-400 hover:text-white transition-colors">AI
+                                Assistant</a></li>
+                        <li><a href="task-manager.html"
+                                class="text-gray-400 hover:text-white transition-colors">เครื่องมือจัดการงาน</a></li>
+                        <li><a href="mood-tracker.html"
+                                class="text-gray-400 hover:text-white transition-colors">บันทึกอารมณ์</a></li>
+                        <li><a href="mental-resources.html"
+                                class="text-gray-400 hover:text-white transition-colors">ทรัพยากรสุขภาพจิต</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium mb-4">ช่วยเหลือ</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">คำถามที่พบบ่อย</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">เงื่อนไขการใช้งาน</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">ศูนย์ช่วยเหลือ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-400 text-sm mb-4 md:mb-0">
+                    &copy; 2024 MSU Intelligence. สงวนลิขสิทธิ์ทั้งหมด.
+                </div>
+                <div class="flex gap-6">
+                    <a href="#"
+                        class="text-gray-400 hover:text-white transition-colors text-sm">นโยบายความเป็นส่วนตัว</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">เงื่อนไขการใช้งาน</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">คุกกี้</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80, // Offset for fixed header
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation for features on scroll
+        document.addEventListener('DOMContentLoaded', function () {
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
+
 </html>

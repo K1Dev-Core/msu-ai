@@ -1,15 +1,185 @@
-<!-- main.html -->
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าหลัก | MSU-Intelligence</title>
+    <title>MSU-Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <style>
+        /* Background effects */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.7) 0%, rgba(251, 113, 36, 0.4) 70%);
+            top: -200px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.5) 0%, rgba(59, 130, 246, 0.3) 70%);
+            bottom: -150px;
+            left: -100px;
+        }
+
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuZGV2L3N2Z2pzIiB2aWV3Qm94PSIwIDAgNzAwIDcwMCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiPjxkZWZzPjxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgoJPGZlVHVyYnVsZW5jZSB0eXBlPSJ0dXJidWxlbmNlIiBiYXNlRnJlcXVlbmN5PSIwLjEiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjE1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHJlc3VsdD0idHVyYnVsZW5jZSI+PC9mZVR1cmJ1bGVuY2U+Cgk8ZmVTcGVjdWxhckxpZ2h0aW5nIHN1cmZhY2VTY2FsZT0iMTUiIHNwZWN1bGFyQ29uc3RhbnQ9IjAuNzUiIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iI2ZmZmZmZiIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KCQk8ZmVEaXN0YW50TGlnaHQgYXppbXV0aD0iMyIgZWxldmF0aW9uPSIxMDAiPjwvZmVEaXN0YW50TGlnaHQ+Cgk8L2ZlU3BlY3VsYXJMaWdodGluZz4KCTwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0idHJhbnNwYXJlbnQiPjwvcmVjdD48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZmlsdGVyPSJ1cmwoI25ubm9pc2UtZmlsdGVyKSI+PC9yZWN0Pjwvc3ZnPg==');
+            background-size: cover;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        /* Font for Thai language */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap');
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        /* Feature card */
+        .feature-card {
+            @apply bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all relative overflow-hidden;
+            height: 100%;
+        }
+
+        .feature-card-icon {
+            @apply w-12 h-12 rounded-full flex items-center justify-center mb-4;
+        }
+
+        /* Confirmation dialog */
+        .confirmation-dialog {
+            @apply fixed top-0 left-0 w-full h-full flex items-center justify-center z-50;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        /* IOS Button Fix - Making it responsive */
+        .ios-button-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fbbf24;
+            color: #000000;
+            border-radius: 1rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            width: auto;
+            min-width: max-content;
+            box-sizing: border-box;
+        }
+
+        .ios-button-primary:hover {
+            background-color: #f59e0b;
+        }
+
+        .ios-button-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* On smaller screens, adjust padding */
+        @media (max-width: 640px) {
+            .ios-button-primary {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Confirmation modal */
+        .confirm-modal {
+            @apply fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .confirm-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .confirm-modal-content {
+            @apply bg-stone-900/90 border border-white/10 rounded-xl p-6 max-w-md w-full mx-4;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .confirm-modal.active .confirm-modal-content {
+            transform: translateY(0);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        * {
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* Internet Explorer 10+ */
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+            /* WebKit browsers */
+        }
+    </style>
 </head>
-<body class="bg-black min-h-screen font-prompt text-white overflow-x-hidden">
+
+<body class="bg-stone-900 min-h-screen text-white">
     <!-- Background Effects -->
     <div class="fixed inset-0 -z-10 overflow-hidden">
         <div class="orb orb-1"></div>
@@ -19,129 +189,436 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 backdrop-blur-xl bg-black/30 border-b border-white/5 z-50">
-        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+    <nav class="sticky top-0 backdrop-blur-xl bg-stone-900/30 border-b border-white/5 z-40 mb-6">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png" alt="MSU Logo" class="h-8 w-8">
-                <span class="text-lg font-medium hidden sm:inline">MSU Intelligence</span>
+                <img src="https://identity.msu.ac.th/wp-content/uploads/2024/04/MSU-Logo-%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87-212x300.png"
+                    alt="MSU Logo" class="h-8 w-auto">
+                <span class="text-lg font-medium">MSU Intelligence</span>
             </div>
-            
-            <!-- User Profile -->
-            <div class="flex items-center gap-4">
-                <span class="text-sm text-gray-300 hidden sm:inline">นักศึกษา</span>
-                <div class="relative group">
-                    <button class="flex items-center gap-2 hover:bg-white/5 p-2 rounded-full transition-colors">
-                        <img src="https://ui-avatars.com/api/?name=MSU+Student&background=random" 
-                             alt="Profile" 
-                             class="w-8 h-8 rounded-full ring-2 ring-yellow-400">
-                        <i class="fas fa-chevron-down text-xs text-gray-400"></i>
-                    </button>
-                    <!-- Dropdown Menu -->
-                    <div class="absolute right-0 mt-2 w-48 py-2 bg-black/80 backdrop-blur-xl rounded-xl shadow-xl border border-white/5 
-                                hidden group-hover:block animate-fade-in">
-                        <a href="#" class="px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-2">
-                            <i class="fas fa-user w-4"></i>
-                            <span>โปรไฟล์</span>
-                        </a>
-                        <a href="#" class="px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-2">
-                            <i class="fas fa-cog w-4"></i>
-                            <span>ตั้งค่า</span>
-                        </a>
-                        <hr class="my-2 border-white/5">
-                        <a href="login.html" class="px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 flex items-center gap-2">
-                            <i class="fas fa-sign-out-alt w-4"></i>
-                            <span>ออกจากระบบ</span>
-                        </a>
-                    </div>
-                </div>
+            <div class="flex items-center gap-3">
+                <button class="p-2 hover:bg-white/5 rounded-full transition-colors" title="แจ้งเตือน">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <button class="p-2 hover:bg-white/5 rounded-full transition-colors" title="การตั้งค่า">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button
+                    class="w-8 h-8 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center text-black">
+                    <span>น</span>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="pt-24 pb-12 px-4">
-        <div class="container mx-auto max-w-6xl">
-            <!-- Welcome Message -->
-            <div class="text-center mb-12">
-                <h1 class="text-3xl font-bold ios-text-gradient mb-2">ยินดีต้อนรับสู่ MSU Intelligence</h1>
-                <p class="text-gray-400">เลือกบริการที่ต้องการใช้งาน</p>
+    <main class="container mx-auto px-4 pb-12">
+        <!-- Welcome Section -->
+        <section class="mb-10">
+            <div
+                class="bg-gradient-to-r from-yellow-400/20 to-yellow-500/10 rounded-xl p-6 md:p-8 border border-yellow-400/20">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
+                    <div class="flex-1">
+                        <h1 class="text-2xl md:text-3xl font-bold mb-2">สวัสดี, นิสิต! 👋</h1>
+                        <p class="text-gray-300 mb-4">ยินดีต้อนรับกลับมายัง MSU Intelligence ของคุณ</p>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="ai-chat.html" class="ios-button-primary">
+                                <i class="fas fa-robot mr-2"></i>
+                                <span>คุยกับ AI</span>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="bg-yellow-400 text-black font-medium px-4 py-3 rounded-xl">
+                        <div class="text-sm mb-1">สถานะวันนี้</div>
+                        <div class="font-bold">มีเรียน 2 วิชา</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Access Cards -->
+        <section class="mb-10">
+            <h2 class="text-xl font-semibold mb-5">เข้าถึงด่วน</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <a href="./ai-chat.html"
+                    class="flex flex-col items-center bg-white/5 hover:bg-white/10 transition-colors p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-robot text-red-400"></i>
+                    </div>
+                    <span class="text-center">AI Assistant</span>
+                </a>
+
+                <a href="./parking.html"
+                    class="flex flex-col items-center bg-white/5 hover:bg-white/10 transition-colors p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-car-side text-blue-400"></i>
+                    </div>
+                    <span class="text-center">จองที่จอดรถ</span>
+                </a>
+                <a href="./meet-friends.html"
+                    class="flex flex-col items-center bg-white/5 hover:bg-white/10 transition-colors p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-users text-green-400"></i>
+                    </div>
+                    <span class="text-center">นัดเพื่อน</span>
+                </a>
+                <a href="./study-consult.html"
+                    class="flex flex-col items-center bg-white/5 hover:bg-white/10 transition-colors p-4 rounded-xl">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-file-alt text-purple-400"></i>
+                    </div>
+                    <span class="text-center">ปรึกษาการเรียน</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- New Feature Cards - แสดงฟีเจอร์ใหม่ -->
+        <section class="mb-10">
+            <h2 class="text-xl font-semibold mb-5">ฟีเจอร์ใหม่เพื่อนิสิต</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- เครื่องมือจัดการงาน -->
+                <div class="feature-card">
+                    <div class="feature-card-icon bg-yellow-500/20">
+                        <i class="fas fa-tasks text-2xl text-yellow-400"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">เครื่องมือจัดการงาน</h3>
+                    <p class="text-gray-300 mb-4">แบ่งงานใหญ่เป็นชิ้นเล็กๆ ที่จัดการได้ง่าย จัดลำดับความสำคัญ
+                        และติดตามความก้าวหน้า</p>
+                    <a href="task-manager.html" class="text-yellow-400 hover:underline flex items-center">
+                        <span>เริ่มใช้งาน</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- บันทึกอารมณ์ -->
+                <div class="feature-card">
+                    <div class="feature-card-icon bg-red-500/20">
+                        <i class="fas fa-heart text-2xl text-red-400"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">บันทึกอารมณ์</h3>
+                    <p class="text-gray-300 mb-4">บันทึกความรู้สึกประจำวัน ระบายความกังวล
+                        และติดตามรูปแบบอารมณ์เพื่อเข้าใจตัวเองมากขึ้น</p>
+                    <a href="mood-tracker.html" class="text-yellow-400 hover:underline flex items-center">
+                        <span>เริ่มใช้งาน</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- ทรัพยากรสุขภาพจิต -->
+                <div class="feature-card">
+                    <div class="feature-card-icon bg-blue-500/20">
+                        <i class="fas fa-hands-helping text-2xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-lg font-medium mb-2">ทรัพยากรสุขภาพจิต</h3>
+                    <p class="text-gray-300 mb-4">เข้าถึงข้อมูลศูนย์ให้คำปรึกษา สายด่วนสุขภาพจิต
+                        และเครื่องมือช่วยเหลือด่วน</p>
+                    <a href="mental-resources.html" class="text-yellow-400 hover:underline flex items-center">
+                        <span>เริ่มใช้งาน</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Today's Schedule -->
+        <section class="mb-10">
+            <div class="flex justify-between items-center mb-5">
+                <h2 class="text-xl font-semibold">ตารางวันนี้</h2>
+                <a href="#" class="text-yellow-400 hover:underline">ดูทั้งหมด</a>
             </div>
 
-            <!-- Menu Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- AI Assistant -->
-                <a href="ai-chat.html" class="ios-card group animate-slide-up" style="--delay: 0.1s">
-                    <div class="ios-icon-container">
-                        <i class="fas fa-robot text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-medium mb-2">AI Assistant</h3>
-                    <p class="text-gray-400 text-sm mb-4">แชทกับ AI เพื่อขอความช่วยเหลือ</p>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-yellow-400">เริ่มแชท</span>
-                        <i class="fas fa-arrow-right text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </a>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Class Schedule -->
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10">
+                    <h3 class="font-medium mb-4 flex items-center gap-2">
+                        <i class="fas fa-graduation-cap text-yellow-400"></i>
+                        <span>ตารางเรียน</span>
+                    </h3>
 
-                <!-- Study Consultation -->
-                <a href="study-consult.html" class="ios-card group animate-slide-up" style="--delay: 0.2s">
-                    <div class="ios-icon-container">
-                        <i class="fas fa-graduation-cap text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-medium mb-2">ปรึกษาการเรียน</h3>
-                    <p class="text-gray-400 text-sm mb-4">พูดคุยกับอาจารย์ที่ปรึกษา</p>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-yellow-400">เข้าสู่ห้องแชท</span>
-                        <i class="fas fa-arrow-right text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </a>
+                    <div class="space-y-3">
+                        <div class="flex items-start bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors cursor-pointer"
+                            onclick="showClassDetails()">
+                            <div class="text-center mr-3 flex-shrink-0">
+                                <div class="bg-yellow-400/20 rounded-lg px-2 py-1 text-yellow-400">
+                                    <div class="text-sm">09:00</div>
+                                    <div class="text-xs">12:00</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="font-medium">วิทยาศาสตร์และเทคโนโลยี</div>
+                                <div class="text-sm text-gray-400">ห้อง A-15</div>
+                            </div>
+                        </div>
 
-                <!-- Meet Friends -->
-                <a href="meet-friends.html" class="ios-card group animate-slide-up" style="--delay: 0.3s">
-                    <div class="ios-icon-container">
-                        <i class="fas fa-users text-2xl"></i>
+                        <div
+                            class="flex items-start bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors cursor-pointer">
+                            <div class="text-center mr-3 flex-shrink-0">
+                                <div class="bg-yellow-400/20 rounded-lg px-2 py-1 text-yellow-400">
+                                    <div class="text-sm">13:00</div>
+                                    <div class="text-xs">17:00</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="font-medium">ระบบฐานข้อมูล</div>
+                                <div class="text-sm text-gray-400">ห้อง IT-305</div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-medium mb-2">นัดเพื่อน</h3>
-                    <p class="text-gray-400 text-sm mb-4">หาเพื่อนทำกิจกรรมและเรียน</p>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-yellow-400">โพสต์หาเพื่อน</span>
-                        <i class="fas fa-arrow-right text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </a>
+                </div>
 
-                <!-- Smart Parking -->
-                <a href="parking.html" class="ios-card group animate-slide-up" style="--delay: 0.4s">
-                    <div class="ios-icon-container">
-                        <i class="fas fa-car text-2xl"></i>
+                <!-- Assignments Due -->
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10">
+                    <h3 class="font-medium mb-4 flex items-center gap-2">
+                        <i class="fas fa-clipboard-check text-yellow-400"></i>
+                        <span>งานที่ต้องส่ง</span>
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div
+                            class="flex items-start bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors cursor-pointer">
+                            <div class="text-center mr-3 flex-shrink-0">
+                                <div class="bg-red-400/20 rounded-lg px-2 py-1 text-red-400">
+                                    <div class="text-sm">วันนี้</div>
+                                    <div class="text-xs">23:59</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="font-medium">รายงานปฏิบัติการทดลอง</div>
+                                <div class="text-sm text-gray-400">วิทยาศาสตร์และเทคโนโลยี</div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-start bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors cursor-pointer">
+                            <div class="text-center mr-3 flex-shrink-0">
+                                <div class="bg-yellow-400/20 rounded-lg px-2 py-1 text-yellow-400">
+                                    <div class="text-sm">พรุ่งนี้</div>
+                                    <div class="text-xs">12:00</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="font-medium">การบ้าน SQL</div>
+                                <div class="text-sm text-gray-400">ระบบฐานข้อมูล</div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-medium mb-2">Smart Parking</h3>
-                    <p class="text-gray-400 text-sm mb-4">จองที่จอดรถล่วงหน้า</p>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-yellow-400">จองที่จอดรถ</span>
-                        <i class="fas fa-arrow-right text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Events -->
+        <section class="mb-10">
+            <div class="flex justify-between items-center mb-5">
+                <h2 class="text-xl font-semibold">กิจกรรมที่กำลังจะมาถึง</h2>
+                <a href="#" class="text-yellow-400 hover:underline">ดูทั้งหมด</a>
             </div>
 
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12">
-                <div class="ios-card text-center">
-                    <h4 class="text-2xl font-bold text-yellow-400">14</h4>
-                    <p class="text-sm text-gray-400">รายวิชาที่ลงทะเบียน</p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Event 1 -->
+                <div
+                    class="bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:bg-white/10 transition-all">
+                    <div
+                        class="h-48 bg-gradient-to-r from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                        <i class="fas fa-microphone-alt text-5xl text-yellow-400/80"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-sm text-yellow-400 flex items-center gap-2 mb-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>25 มี.ค. 2569 • 13:00-16:00</span>
+                        </div>
+                        <h3 class="font-medium text-lg mb-2">MSU Tech Talk 2024</h3>
+                        <p class="text-gray-300 text-sm mb-4">งานสัมมนาเทคโนโลยีประจำปี
+                            พบกับวิทยากรชั้นนำและเครือข่ายผู้เชี่ยวชาญในวงการ IT</p>
+                        <div class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                            <span>หอประชุมใหญ่ มหาวิทยาลัยมหาสารคาม</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="ios-card text-center">
-                    <h4 class="text-2xl font-bold text-yellow-400">3.75</h4>
-                    <p class="text-sm text-gray-400">เกรดเฉลี่ย</p>
+
+                <!-- Event 2 -->
+                <div
+                    class="bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:bg-white/10 transition-all">
+                    <div
+                        class="h-48 bg-gradient-to-r from-green-500/20 to-yellow-500/20 flex items-center justify-center">
+                        <i class="fas fa-laptop-code text-5xl text-yellow-400/80"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-sm text-yellow-400 flex items-center gap-2 mb-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>27 มี.ค. 2569 • 09:00-17:00</span>
+                        </div>
+                        <h3 class="font-medium text-lg mb-2">Coding Workshop</h3>
+                        <p class="text-gray-300 text-sm mb-4">เวิร์คช็อปการเขียนโค้ดและพัฒนาเว็บแอปพลิเคชันด้วย React
+                            และ Node.js</p>
+                        <div class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                            <span>ห้องปฏิบัติการคอมพิวเตอร์ คณะวิทยาการสารสนเทศ</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="ios-card text-center">
-                    <h4 class="text-2xl font-bold text-yellow-400">5</h4>
-                    <p class="text-sm text-gray-400">กิจกรรมที่เข้าร่วม</p>
+
+                <!-- Event 3 -->
+                <div
+                    class="bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:bg-white/10 transition-all">
+                    <div
+                        class="h-48 bg-gradient-to-r from-red-500/20 to-orange-500/20 flex items-center justify-center">
+                        <i class="fas fa-handshake text-5xl text-yellow-400/80"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-sm text-yellow-400 flex items-center gap-2 mb-2">
+                            <i class="fas fa-calendar"></i>
+                            <span>1 เม.ย. 2569 • 10:00-15:00</span>
+                        </div>
+                        <h3 class="font-medium text-lg mb-2">MSU Job Fair 2024</h3>
+                        <p class="text-gray-300 text-sm mb-4">งานนัดพบแรงงานประจำปี พบกับบริษัทชั้นนำกว่า 50 บริษัท
+                            ที่เปิดรับนิสิตฝึกงานและจบใหม่</p>
+                        <div class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                            <span>ลานกิจกรรม มหาวิทยาลัยมหาสารคาม</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="ios-card text-center">
-                    <h4 class="text-2xl font-bold text-yellow-400">89%</h4>
-                    <p class="text-sm text-gray-400">ความก้าวหน้า</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Confirmation Dialog for Class Details -->
+    <div id="classDetailsModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-lg font-medium">ยืนยันการจอง</h3>
+                <button onclick="closeModal('classDetailsModal')" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div>
+                <div class="mb-5">
+                    <div class="text-yellow-400 mb-2">รายละเอียด</div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-book text-gray-400 w-5 text-center"></i>
+                        <span>วิทยาศาสตร์และเทคโนโลยี</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-map-marker-alt text-gray-400 w-5 text-center"></i>
+                        <span>ห้อง A-15</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-clock text-gray-400 w-5 text-center"></i>
+                        <span>13:00 - 17:00</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-user-tie text-gray-400 w-5 text-center"></i>
+                        <span>ผศ.ดร.สมชาย ใจดี</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button onclick="closeModal('classDetailsModal')"
+                        class="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors">
+                        ปิด
+                    </button>
+                    <button
+                        class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors">
+                        ยืนยัน
+                    </button>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+
+    <!-- Confirmation Dialog for Reservation -->
+    <div id="confirmationDialog" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-lg font-medium">ยืนยันการจอง</h3>
+                <button onclick="closeModal('confirmationDialog')" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div>
+                <div class="mb-5">
+                    <div class="text-yellow-400 mb-2">รายละเอียด</div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-book text-gray-400 w-5 text-center"></i>
+                        <span>วิทยาศาสตร์และเทคโนโลยี</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-map-marker-alt text-gray-400 w-5 text-center"></i>
+                        <span>ห้อง A-15</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-clock text-gray-400 w-5 text-center"></i>
+                        <span>13:00 - 17:00</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button onclick="closeModal('confirmationDialog')"
+                        class="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors">
+                        ยกเลิก
+                    </button>
+                    <button onclick="confirmReservation()"
+                        class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded-lg transition-colors">
+                        ยืนยันการจอง
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to show confirmation dialog
+        function showConfirmDialog() {
+            document.getElementById('confirmationDialog').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to show class details
+        function showClassDetails() {
+            document.getElementById('classDetailsModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close any modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Function to handle reservation confirmation
+        function confirmReservation() {
+            // Close the dialog first
+            closeModal('confirmationDialog');
+
+            // Show success message or redirect
+            setTimeout(() => {
+                alert('การจองสำเร็จ!');
+            }, 300);
+        }
+
+        // Close modals when clicking outside content
+        document.querySelectorAll('.confirm-modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal.id);
+                }
+            });
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.confirm-modal.active').forEach(modal => {
+                    closeModal(modal.id);
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>
